@@ -4,80 +4,78 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 <title>ZIAU — Business Manager</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
-  :root {
-    --bg:#0e0e12;--bg2:#16161d;--bg3:#1e1e28;--border:#2a2a38;
-    --accent:#c9a84c;--accent2:#e8c96a;--accent-dim:rgba(201,168,76,0.12);--accent-dim2:rgba(201,168,76,0.22);
-    --red:#e05c5c;--red-dim:rgba(224,92,92,0.12);--green:#5cba7d;--green-dim:rgba(92,186,125,0.12);
-    --blue:#5c8fe0;--blue-dim:rgba(92,143,224,0.12);--orange:#e0945c;--orange-dim:rgba(224,148,92,0.12);
-    --text:#f0f0f0;--text2:#a0a0b8;--text3:#606078;
-    --card-shadow:0 2px 16px rgba(0,0,0,0.4);--radius:14px;--radius-sm:8px;
-  }
-  .light {
-    --bg:#f5f4f0;--bg2:#ffffff;--bg3:#ece9e0;--border:#ddd9ce;
-    --accent:#b8902a;--accent2:#9a7520;--accent-dim:rgba(184,144,42,0.1);--accent-dim2:rgba(184,144,42,0.2);
-    --red:#c94040;--red-dim:rgba(201,64,64,0.1);--green:#2d8a50;--green-dim:rgba(45,138,80,0.1);
-    --blue:#2d5eb8;--blue-dim:rgba(45,94,184,0.1);--orange:#c4622a;--orange-dim:rgba(196,98,42,0.1);
-    --text:#1a1a2e;--text2:#5a5a7a;--text3:#9a9ab0;--card-shadow:0 2px 12px rgba(0,0,0,0.08);
-  }
+  :root{--bg:#0e0e12;--bg2:#16161d;--bg3:#1e1e28;--border:#2a2a38;--accent:#c9a84c;--accent2:#e8c96a;--accent-dim:rgba(201,168,76,0.12);--red:#e05c5c;--red-dim:rgba(224,92,92,0.12);--green:#5cba7d;--green-dim:rgba(92,186,125,0.12);--orange:#e0945c;--orange-dim:rgba(224,148,92,0.12);--text:#f0f0f0;--text2:#a0a0b8;--text3:#606078;--radius:14px;--radius-sm:8px;}
+  .light{--bg:#f5f4f0;--bg2:#fff;--bg3:#ece9e0;--border:#ddd9ce;--accent:#b8902a;--red:#c94040;--red-dim:rgba(201,64,64,0.1);--green:#2d8a50;--green-dim:rgba(45,138,80,0.1);--orange:#c4622a;--orange-dim:rgba(196,98,42,0.1);--text:#1a1a2e;--text2:#5a5a7a;--text3:#9a9ab0;}
   *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background 0.3s,color 0.3s;font-size:15px;}
-  #app{display:flex;flex-direction:column;min-height:100vh;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;transition:background 0.3s,color 0.3s;}
+  /* LOGIN */
+  #login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;}
+  .login-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:32px 24px;width:100%;max-width:380px;}
+  .login-logo{font-size:32px;font-weight:700;letter-spacing:0.12em;color:var(--accent);text-align:center;margin-bottom:4px;}
+  .login-sub{text-align:center;font-size:12px;color:var(--text3);letter-spacing:0.08em;margin-bottom:28px;}
+  .login-error{background:var(--red-dim);border:1px solid var(--red);color:var(--red);padding:10px 14px;border-radius:var(--radius-sm);font-size:13px;margin-bottom:14px;display:none;}
+  /* APP */
+  #app-screen{display:none;flex-direction:column;min-height:100vh;}
   .topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;}
-  .topbar-logo{font-size:22px;font-weight:700;letter-spacing:0.12em;color:var(--accent);}
-  .topbar-sub{font-size:10px;color:var(--text3);letter-spacing:0.06em;margin-top:1px;}
+  .topbar-logo{font-size:20px;font-weight:700;letter-spacing:0.12em;color:var(--accent);}
+  .topbar-sub{font-size:10px;color:var(--text3);letter-spacing:0.06em;}
   .topbar-right{display:flex;gap:8px;align-items:center;}
-  .icon-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:7px 10px;border-radius:var(--radius-sm);cursor:pointer;font-size:15px;transition:all 0.2s;}
-  .icon-btn:hover{border-color:var(--accent);color:var(--accent);}
+  .user-badge{background:var(--accent-dim);border:1px solid var(--accent);color:var(--accent);padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;}
+  .icon-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:7px 10px;border-radius:var(--radius-sm);cursor:pointer;font-size:14px;}
   .content{flex:1;padding:16px;max-width:900px;margin:0 auto;width:100%;}
   .bottom-nav{display:flex;background:var(--bg2);border-top:1px solid var(--border);position:sticky;bottom:0;z-index:100;}
   .nav-btn{flex:1;padding:10px 4px 12px;background:none;border:none;cursor:pointer;color:var(--text3);display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-family:'DM Sans',sans-serif;transition:color 0.2s;}
-  .nav-btn .nav-icon{font-size:20px;}
+  .nav-btn .ni{font-size:20px;}
   .nav-btn.active{color:var(--accent);}
-  .card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--card-shadow);margin-bottom:14px;}
+  /* CARDS */
+  .card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px;}
   .card-title{font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:10px;}
-  .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
   .stat-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;}
   .stat-label{font-size:11px;color:var(--text3);margin-bottom:4px;}
-  .stat-value{font-size:20px;font-weight:700;font-family:'DM Mono',monospace;color:var(--text);}
+  .stat-value{font-size:20px;font-weight:700;font-family:'DM Mono',monospace;}
   .stat-value.gold{color:var(--accent);}
   .stat-value.green{color:var(--green);}
   .stat-sub{font-size:11px;color:var(--text3);margin-top:2px;}
   .tab-row{display:flex;gap:8px;margin-bottom:14px;overflow-x:auto;padding-bottom:2px;}
   .tab-row::-webkit-scrollbar{display:none;}
-  .tab-btn{padding:7px 14px;border-radius:20px;border:1px solid var(--border);background:var(--bg2);color:var(--text2);cursor:pointer;font-size:13px;white-space:nowrap;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+  .tab-btn{padding:7px 14px;border-radius:20px;border:1px solid var(--border);background:var(--bg2);color:var(--text2);cursor:pointer;font-size:13px;white-space:nowrap;font-family:'DM Sans',sans-serif;}
   .tab-btn.active{background:var(--accent);border-color:var(--accent);color:#000;font-weight:600;}
+  /* FORMS */
   .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
   .form-group{display:flex;flex-direction:column;gap:5px;}
   .form-group.span2{grid-column:1/-1;}
   label{font-size:12px;color:var(--text2);font-weight:500;}
-  input,select,textarea{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;transition:border-color 0.2s;width:100%;}
-  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);}
+  input,select,textarea{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;width:100%;}
+  input:focus,select:focus{outline:none;border-color:var(--accent);}
   select option{background:var(--bg2);}
-  .btn{padding:11px 20px;border-radius:var(--radius-sm);border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;transition:all 0.2s;}
+  .btn{padding:11px 20px;border-radius:var(--radius-sm);border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;}
   .btn-primary{background:var(--accent);color:#000;}
-  .btn-primary:hover{background:var(--accent2);}
   .btn-danger{background:var(--red-dim);color:var(--red);border:1px solid var(--red);}
   .btn-ghost{background:var(--bg3);color:var(--text2);border:1px solid var(--border);}
   .btn-full{width:100%;}
   .btn-sm{padding:6px 12px;font-size:12px;}
+  /* TABLE */
   .table-wrap{overflow-x:auto;}
   table{width:100%;border-collapse:collapse;font-size:13px;}
-  th{text-align:left;padding:9px 10px;color:var(--text3);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;border-bottom:1px solid var(--border);}
+  th{text-align:left;padding:9px 10px;color:var(--text3);font-weight:600;font-size:11px;text-transform:uppercase;border-bottom:1px solid var(--border);}
   td{padding:10px;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:middle;}
   tr:last-child td{border-bottom:none;}
-  td .name{color:var(--text);font-weight:500;}
+  .name{color:var(--text);font-weight:500;}
+  /* BADGES */
   .badge{display:inline-block;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600;}
   .badge-red{background:var(--red-dim);color:var(--red);}
   .badge-green{background:var(--green-dim);color:var(--green);}
   .badge-orange{background:var(--orange-dim);color:var(--orange);}
   .badge-gold{background:var(--accent-dim);color:var(--accent);}
-  .badge-blue{background:var(--blue-dim);color:var(--blue);}
-  .alert{padding:12px 14px;border-radius:var(--radius-sm);margin-bottom:10px;font-size:13px;display:flex;gap:8px;align-items:flex-start;}
+  /* ALERTS */
+  .alert{padding:12px 14px;border-radius:var(--radius-sm);margin-bottom:10px;font-size:13px;display:flex;gap:8px;}
   .alert-red{background:var(--red-dim);border:1px solid var(--red);color:var(--red);}
   .alert-orange{background:var(--orange-dim);border:1px solid var(--orange);color:var(--orange);}
-  .alert-green{background:var(--green-dim);border:1px solid var(--green);color:var(--green);}
+  /* MODAL */
   .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;display:flex;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);}
   .modal-bg.hidden{display:none;}
   .modal{background:var(--bg2);border-radius:var(--radius) var(--radius) 0 0;padding:20px;width:100%;max-width:600px;border-top:1px solid var(--border);max-height:90vh;overflow-y:auto;animation:slideUp 0.25s ease;}
@@ -85,65 +83,80 @@
   .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
   .modal-title{font-size:17px;font-weight:700;}
   .close-btn{background:var(--bg3);border:none;color:var(--text2);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;}
+  /* MISC */
   .section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
   .section-title{font-size:18px;font-weight:700;}
-  .progress-bar{height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;margin-top:6px;}
-  .progress-fill{height:100%;border-radius:3px;transition:width 0.4s;background:var(--accent);}
-  .progress-fill.red{background:var(--red);}
-  .progress-fill.green{background:var(--green);}
-  .chart-container{position:relative;height:160px;display:flex;align-items:flex-end;gap:6px;padding-top:10px;}
-  .chart-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end;}
-  .chart-bar{width:100%;background:var(--accent-dim);border-radius:4px 4px 0 0;min-height:4px;transition:height 0.4s;}
-  .chart-bar.fill{background:var(--accent);}
-  .chart-label{font-size:10px;color:var(--text3);}
-  .chart-val{font-size:9px;color:var(--accent);font-family:'DM Mono',monospace;}
+  .flex-between{display:flex;justify-content:space-between;align-items:center;}
+  .mt{margin-top:14px;}
+  .mb{margin-bottom:10px;}
+  .mono{font-family:'DM Mono',monospace;}
+  .hidden{display:none!important;}
+  .empty{text-align:center;padding:40px 20px;color:var(--text3);}
+  .empty-icon{font-size:40px;margin-bottom:10px;}
   .log-item{padding:10px 0;border-bottom:1px solid var(--border);display:flex;gap:10px;}
   .log-item:last-child{border-bottom:none;}
   .log-icon{font-size:18px;flex-shrink:0;}
   .log-text{font-size:13px;color:var(--text2);}
   .log-text strong{color:var(--text);}
   .log-time{font-size:11px;color:var(--text3);margin-top:2px;font-family:'DM Mono',monospace;}
-  .empty{text-align:center;padding:40px 20px;color:var(--text3);}
-  .empty-icon{font-size:40px;margin-bottom:10px;}
-  .empty p{font-size:14px;}
-  .rank-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);}
-  .rank-item:last-child{border-bottom:none;}
-  .rank-num{font-size:13px;font-weight:700;color:var(--text3);width:20px;}
-  .rank-name{flex:1;font-size:14px;font-weight:500;}
-  .rank-val{font-size:13px;font-family:'DM Mono',monospace;color:var(--accent);}
+  .progress-bar{height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;margin-top:6px;}
+  .progress-fill{height:100%;border-radius:3px;background:var(--accent);}
+  .progress-fill.red{background:var(--red);}
+  .progress-fill.green{background:var(--green);}
   .settings-row{display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--border);}
   .settings-row:last-child{border-bottom:none;}
   .settings-label{font-size:14px;font-weight:500;}
   .settings-sub{font-size:12px;color:var(--text3);margin-top:2px;}
   .settings-input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:7px 10px;border-radius:var(--radius-sm);font-family:'DM Mono',monospace;font-size:13px;width:110px;text-align:right;}
-  .settings-input:focus{outline:none;border-color:var(--accent);}
+  .chart-container{height:160px;display:flex;align-items:flex-end;gap:6px;padding-top:10px;}
+  .chart-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end;}
+  .chart-bar{width:100%;background:var(--accent-dim);border-radius:4px 4px 0 0;min-height:4px;}
+  .chart-bar.fill{background:var(--accent);}
+  .chart-label{font-size:10px;color:var(--text3);}
+  .chart-val{font-size:9px;color:var(--accent);font-family:'DM Mono',monospace;}
+  .rank-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);}
+  .rank-item:last-child{border-bottom:none;}
   .page{display:none;}
   .page.active{display:block;}
-  .flex-row{display:flex;gap:10px;align-items:center;}
-  .flex-between{display:flex;justify-content:space-between;align-items:center;}
-  .mt{margin-top:14px;}
-  .mb{margin-bottom:10px;}
-  .mono{font-family:'DM Mono',monospace;}
-  .divider{height:1px;background:var(--border);margin:14px 0;}
-  .hidden{display:none!important;}
+  /* ADMIN ONLY */
+  .admin-only{display:none;}
+  .is-admin .admin-only{display:flex;}
   ::-webkit-scrollbar{width:4px;height:4px;}
-  ::-webkit-scrollbar-track{background:transparent;}
   ::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
   @media(max-width:480px){.stat-value{font-size:17px;}.form-grid{grid-template-columns:1fr;}.form-group.span2{grid-column:1;}}
 </style>
 </head>
 <body>
-<div id="app">
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">ZIAU</div>
+    <div class="login-sub">BUSINESS MANAGER</div>
+    <div class="login-error" id="login-error">Invalid username or password</div>
+    <div class="form-group" style="margin-bottom:12px">
+      <label>Username</label>
+      <input type="text" id="login-user" placeholder="Enter username"/>
+    </div>
+    <div class="form-group" style="margin-bottom:18px">
+      <label>Password</label>
+      <input type="password" id="login-pass" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()"/>
+    </div>
+    <button class="btn btn-primary btn-full" onclick="doLogin()">Login</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app-screen">
   <div class="topbar">
     <div>
       <div class="topbar-logo">ZIAU</div>
       <div class="topbar-sub">BUSINESS MANAGER</div>
     </div>
     <div class="topbar-right">
-      <button class="icon-btn" onclick="exportData()" title="Backup">💾</button>
-      <button class="icon-btn" onclick="openModal('modal-import')" title="Restore">📂</button>
-      <button class="icon-btn" id="installBtn" onclick="installApp()" title="Add to Home Screen" style="display:none">📲</button>
-      <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" title="Theme">🌙</button>
+      <span class="user-badge" id="user-badge">—</span>
+      <button class="icon-btn" id="themeBtn" onclick="toggleTheme()">🌙</button>
+      <button class="icon-btn" onclick="doLogout()">🚪</button>
     </div>
   </div>
 
@@ -151,51 +164,23 @@
     <!-- DASHBOARD -->
     <div class="page active" id="page-dashboard">
       <div id="alerts-container"></div>
-      <div class="stat-grid mb" style="margin-bottom:14px">
-        <div class="stat-card">
-          <div class="stat-label">Today's Revenue</div>
-          <div class="stat-value gold" id="stat-today-rev">PKR 0</div>
-          <div class="stat-sub" id="stat-today-units">0 units sold</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">This Month</div>
-          <div class="stat-value gold" id="stat-month-rev">PKR 0</div>
-          <div class="stat-sub" id="stat-month-units">0 units sold</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Total Revenue</div>
-          <div class="stat-value" id="stat-total-rev">PKR 0</div>
-          <div class="stat-sub" id="stat-total-sales">0 total sales</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Total Profit</div>
-          <div class="stat-value green" id="stat-profit">—</div>
-          <div class="stat-sub" id="stat-margin"></div>
-        </div>
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-label">Today's Revenue</div><div class="stat-value gold" id="stat-today-rev">PKR 0</div><div class="stat-sub" id="stat-today-u">0 units</div></div>
+        <div class="stat-card"><div class="stat-label">This Month</div><div class="stat-value gold" id="stat-month-rev">PKR 0</div><div class="stat-sub" id="stat-month-u">0 units</div></div>
+        <div class="stat-card"><div class="stat-label">Total Revenue</div><div class="stat-value" id="stat-total-rev">PKR 0</div><div class="stat-sub" id="stat-total-s">0 sales</div></div>
+        <div class="stat-card"><div class="stat-label">Total Profit</div><div class="stat-value green" id="stat-profit">—</div><div class="stat-sub" id="stat-margin"></div></div>
       </div>
-      <div class="card">
-        <div class="card-title">Monthly Revenue — Last 6 Months</div>
-        <div class="chart-container" id="revenue-chart"></div>
-      </div>
-      <div class="card">
-        <div class="card-title">🏆 Best Selling SKUs</div>
-        <div id="best-sellers-list"></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Stock Overview</div>
-        <div id="stock-overview-list"></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Recent Activity</div>
-        <div id="recent-log"></div>
-      </div>
+      <div class="card"><div class="card-title">Monthly Revenue</div><div class="chart-container" id="revenue-chart"></div></div>
+      <div class="card"><div class="card-title">🏆 Best Selling SKUs</div><div id="best-sellers-list"></div></div>
+      <div class="card"><div class="card-title">Stock Overview</div><div id="stock-overview-list"></div></div>
+      <div class="card"><div class="card-title">Recent Activity</div><div id="recent-log"></div></div>
     </div>
 
     <!-- SALES -->
     <div class="page" id="page-sales">
       <div class="section-header">
         <div class="section-title">Sales</div>
-        <button class="btn btn-primary" onclick="openModal('modal-sale')">+ Add Sale</button>
+        <button class="btn btn-primary btn-sm" onclick="openModal('modal-sale')">+ Add Sale</button>
       </div>
       <div class="tab-row">
         <button class="tab-btn active" onclick="filterSales('all',this)">All</button>
@@ -204,23 +189,16 @@
       </div>
       <div class="card">
         <div class="table-wrap">
-          <table>
-            <thead><tr><th>Date</th><th>SKU</th><th>Qty</th><th>Total</th><th>Seller</th><th>Customer</th><th></th></tr></thead>
-            <tbody id="sales-table"></tbody>
-          </table>
+          <table><thead><tr><th>Date</th><th>Product</th><th>Qty</th><th>Total</th><th>Seller</th><th>Customer</th><th>By</th><th></th></tr></thead>
+          <tbody id="sales-table"></tbody></table>
         </div>
-        <div id="sales-empty" class="empty hidden">
-          <div class="empty-icon">🧴</div>
-          <p>No sales yet. Tap + Add Sale.</p>
-        </div>
+        <div id="sales-empty" class="empty hidden"><div class="empty-icon">🧴</div><p>No sales yet.</p></div>
       </div>
     </div>
 
     <!-- INVENTORY -->
     <div class="page" id="page-inventory">
-      <div class="section-header">
-        <div class="section-title">Inventory</div>
-      </div>
+      <div class="section-title mb">Inventory</div>
       <div class="tab-row">
         <button class="tab-btn active" onclick="switchInvTab('finished',this)">Finished Goods</button>
         <button class="tab-btn" onclick="switchInvTab('raw',this)">Raw Materials</button>
@@ -228,10 +206,10 @@
       </div>
       <div id="inv-finished">
         <div class="flex-between mb">
-          <div style="font-size:13px;color:var(--text2)">All SKUs & stock levels</div>
+          <div style="font-size:13px;color:var(--text2)">All SKUs</div>
           <div style="display:flex;gap:8px">
             <button class="btn btn-ghost btn-sm" onclick="openModal('modal-restock')">+ Restock</button>
-            <button class="btn btn-primary btn-sm" onclick="openModal('modal-product')">+ SKU</button>
+            <button class="btn btn-primary btn-sm admin-only" onclick="openModal('modal-product')">+ SKU</button>
           </div>
         </div>
         <div id="sku-list"></div>
@@ -245,7 +223,7 @@
       </div>
       <div id="inv-production" class="hidden">
         <div class="flex-between mb">
-          <div style="font-size:13px;color:var(--text2)">Log a production batch</div>
+          <div style="font-size:13px;color:var(--text2)">Production batches</div>
           <button class="btn btn-primary btn-sm" onclick="openModal('modal-production')">+ Log Batch</button>
         </div>
         <div id="production-list"></div>
@@ -266,60 +244,51 @@
       <div class="card"><div id="full-log"></div></div>
     </div>
 
-    <!-- SETTINGS -->
-    <div class="page" id="page-settings">
-      <div class="section-title mb">Settings</div>
+    <!-- ADMIN -->
+    <div class="page" id="page-admin">
+      <div class="section-title mb">Admin Panel</div>
 
-      <!-- Raw Material Rates -->
+      <!-- Manage Users -->
+      <div class="card">
+        <div class="flex-between" style="margin-bottom:12px">
+          <div class="card-title" style="margin:0">Team Members</div>
+          <button class="btn btn-primary btn-sm" onclick="openModal('modal-adduser')">+ Add User</button>
+        </div>
+        <div id="users-list"></div>
+      </div>
+
+      <!-- Settings -->
       <div class="card">
         <div class="card-title">Raw Material Rates</div>
         <div class="settings-row">
-          <div><div class="settings-label">Ethanol Rate</div><div class="settings-sub">PKR per ml (currently 99% ethanol)</div></div>
-          <input class="settings-input" type="number" id="rate-ethanol" placeholder="1.00" step="0.01"/>
+          <div><div class="settings-label">Ethanol Rate</div><div class="settings-sub">PKR per ml</div></div>
+          <input class="settings-input" type="number" id="rate-ethanol" step="0.01"/>
         </div>
         <div id="oil-rates-container"></div>
-        <div style="margin-top:12px">
-          <button class="btn btn-primary btn-sm" onclick="saveRates()">Save Rates</button>
-        </div>
+        <div class="mt"><button class="btn btn-primary btn-sm" onclick="saveRates()">Save Rates</button></div>
       </div>
 
-      <!-- SKU Prices -->
       <div class="card">
         <div class="card-title">SKU Selling Prices</div>
         <div id="sku-price-settings"></div>
-        <div style="margin-top:12px">
-          <button class="btn btn-primary btn-sm" onclick="saveSKUPrices()">Save Prices</button>
-        </div>
+        <div class="mt"><button class="btn btn-primary btn-sm" onclick="saveSKUPrices()">Save Prices</button></div>
       </div>
 
-      <!-- SKU Thresholds -->
       <div class="card">
-        <div class="card-title">Low Stock Alert Thresholds</div>
+        <div class="card-title">Low Stock Thresholds</div>
         <div id="sku-threshold-settings"></div>
-        <div style="margin-top:12px">
-          <button class="btn btn-primary btn-sm" onclick="saveThresholds()">Save Thresholds</button>
-        </div>
-      </div>
-
-      <!-- Danger Zone -->
-      <div class="card" style="border-color:var(--red)">
-        <div class="card-title" style="color:var(--red)">Data Management</div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap">
-          <button class="btn btn-ghost btn-sm" onclick="exportData()">💾 Export Backup</button>
-          <button class="btn btn-ghost btn-sm" onclick="openModal('modal-import')">📂 Restore Backup</button>
-          <button class="btn btn-danger btn-sm" onclick="clearAllData()">🗑 Clear All Data</button>
-        </div>
+        <div class="mt"><button class="btn btn-primary btn-sm" onclick="saveThresholds()">Save Thresholds</button></div>
       </div>
     </div>
   </div>
 
-  <nav class="bottom-nav">
-    <button class="nav-btn active" onclick="navigate('dashboard',this)"><span class="nav-icon">📊</span>Home</button>
-    <button class="nav-btn" onclick="navigate('sales',this)"><span class="nav-icon">🧾</span>Sales</button>
-    <button class="nav-btn" onclick="navigate('inventory',this)"><span class="nav-icon">📦</span>Stock</button>
-    <button class="nav-btn" onclick="navigate('analytics',this)"><span class="nav-icon">📈</span>Analytics</button>
-    <button class="nav-btn" onclick="navigate('log',this)"><span class="nav-icon">📋</span>Log</button>
-    <button class="nav-btn" onclick="navigate('settings',this)"><span class="nav-icon">⚙️</span>Settings</button>
+  <nav class="bottom-nav" id="bottom-nav">
+    <button class="nav-btn active" onclick="navigate('dashboard',this)"><span class="ni">📊</span>Home</button>
+    <button class="nav-btn" onclick="navigate('sales',this)"><span class="ni">🧾</span>Sales</button>
+    <button class="nav-btn" onclick="navigate('inventory',this)"><span class="ni">📦</span>Stock</button>
+    <button class="nav-btn" onclick="navigate('analytics',this)"><span class="ni">📈</span>Analytics</button>
+    <button class="nav-btn" onclick="navigate('log',this)"><span class="ni">📋</span>Log</button>
+    <button class="nav-btn admin-only" id="admin-nav-btn" onclick="navigate('admin',this)"><span class="ni">🛡️</span>Admin</button>
   </nav>
 </div>
 
@@ -328,16 +297,14 @@
   <div class="modal">
     <div class="modal-header"><div class="modal-title">Record Sale</div><button class="close-btn" onclick="closeModal('modal-sale')">✕</button></div>
     <div class="form-grid">
-      <div class="form-group span2"><label>Product (SKU)</label><select id="sale-sku"></select></div>
+      <div class="form-group span2"><label>Product</label><select id="sale-sku"></select></div>
       <div class="form-group"><label>Quantity</label><input type="number" id="sale-qty" min="1" value="1" oninput="updateSaleTotal()"/></div>
       <div class="form-group"><label>Price per Unit (PKR)</label><input type="number" id="sale-price" oninput="updateSaleTotal()"/></div>
       <div class="form-group span2"><label>Total (auto)</label><input type="text" id="sale-total" readonly style="background:var(--accent-dim);color:var(--accent);font-weight:700"/></div>
-      <div class="form-group"><label>Sold By</label><input type="text" id="sale-seller" placeholder="e.g. Ahmed"/></div>
-      <div class="form-group"><label>Customer Name</label><input type="text" id="sale-customer" placeholder="optional"/></div>
-      <div class="form-group"><label>Payment Method</label>
-        <select id="sale-payment"><option>Cash</option><option>Bank Transfer</option><option>Card</option><option>Other</option></select>
-      </div>
-      <div class="form-group"><label>Notes (optional)</label><input type="text" id="sale-notes" placeholder="e.g. wholesale"/></div>
+      <div class="form-group"><label>Sold By</label><input type="text" id="sale-seller" placeholder="Your name"/></div>
+      <div class="form-group"><label>Customer</label><input type="text" id="sale-customer" placeholder="optional"/></div>
+      <div class="form-group"><label>Payment</label><select id="sale-payment"><option>Cash</option><option>Bank Transfer</option><option>Card</option><option>Other</option></select></div>
+      <div class="form-group"><label>Notes</label><input type="text" id="sale-notes" placeholder="optional"/></div>
     </div>
     <div class="mt"><button class="btn btn-primary btn-full" onclick="addSale()">Save Sale</button></div>
   </div>
@@ -345,32 +312,15 @@
 
 <div class="modal-bg hidden" id="modal-product">
   <div class="modal">
-    <div class="modal-header"><div class="modal-title">Add SKU / Product</div><button class="close-btn" onclick="closeModal('modal-product')">✕</button></div>
+    <div class="modal-header"><div class="modal-title">Add SKU</div><button class="close-btn" onclick="closeModal('modal-product')">✕</button></div>
     <div class="form-grid">
-      <div class="form-group span2"><label>Product Name</label><input type="text" id="prod-name" placeholder="e.g. Desert Tonka"/></div>
-      <div class="form-group"><label>SKU Code</label><input type="text" id="prod-sku" placeholder="e.g. DT-50"/></div>
-      <div class="form-group"><label>Type</label>
-        <select id="prod-type">
-          <option value="50ml">50ml Bottle</option>
-          <option value="10ml">10ml Pocket</option>
-          <option value="giftbox">Gift Box</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-      <div class="form-group"><label>Selling Price (PKR)</label><input type="number" id="prod-price" placeholder="e.g. 2500"/></div>
-      <div class="form-group"><label>Initial Stock (units)</label><input type="number" id="prod-stock" value="0"/></div>
+      <div class="form-group span2"><label>Product Name</label><input type="text" id="prod-name"/></div>
+      <div class="form-group"><label>SKU Code</label><input type="text" id="prod-sku"/></div>
+      <div class="form-group"><label>Type</label><select id="prod-type"><option value="50ml">50ml Bottle</option><option value="10ml">10ml Pocket</option><option value="giftbox">Gift Box</option><option value="other">Other</option></select></div>
+      <div class="form-group"><label>Selling Price (PKR)</label><input type="number" id="prod-price"/></div>
+      <div class="form-group"><label>Initial Stock</label><input type="number" id="prod-stock" value="0"/></div>
       <div class="form-group"><label>Low Stock Alert At</label><input type="number" id="prod-threshold" value="5"/></div>
-      <div class="form-group span2"><label>Fragrance (for cost calc)</label>
-        <select id="prod-fragrance">
-          <option value="">— None / Not applicable —</option>
-          <option value="Desert Tonka">Desert Tonka</option>
-          <option value="Signature">Signature</option>
-          <option value="Desire">Desire</option>
-          <option value="Najm">Najm</option>
-          <option value="Sovereign">Sovereign</option>
-          <option value="Bloom">Bloom</option>
-        </select>
-      </div>
+      <div class="form-group span2"><label>Fragrance</label><select id="prod-fragrance"><option value="">— None —</option><option>Desert Tonka</option><option>Signature</option><option>Desire</option><option>Najm</option><option>Sovereign</option><option>Bloom</option></select></div>
     </div>
     <div class="mt"><button class="btn btn-primary btn-full" onclick="addProduct()">Add Product</button></div>
   </div>
@@ -378,11 +328,11 @@
 
 <div class="modal-bg hidden" id="modal-restock">
   <div class="modal">
-    <div class="modal-header"><div class="modal-title">Restock Finished Goods</div><button class="close-btn" onclick="closeModal('modal-restock')">✕</button></div>
+    <div class="modal-header"><div class="modal-title">Restock</div><button class="close-btn" onclick="closeModal('modal-restock')">✕</button></div>
     <div class="form-grid">
-      <div class="form-group span2"><label>Product (SKU)</label><select id="restock-sku"></select></div>
+      <div class="form-group span2"><label>Product</label><select id="restock-sku"></select></div>
       <div class="form-group"><label>Quantity Added</label><input type="number" id="restock-qty" min="1" value="1"/></div>
-      <div class="form-group"><label>Supplier (optional)</label><input type="text" id="restock-supplier" placeholder="e.g. Al Haramain"/></div>
+      <div class="form-group"><label>Supplier (optional)</label><input type="text" id="restock-supplier"/></div>
     </div>
     <div class="mt"><button class="btn btn-primary btn-full" onclick="addRestock()">Confirm Restock</button></div>
   </div>
@@ -392,21 +342,11 @@
   <div class="modal">
     <div class="modal-header"><div class="modal-title">Raw Material Entry</div><button class="close-btn" onclick="closeModal('modal-rawmat')">✕</button></div>
     <div class="form-grid">
-      <div class="form-group span2"><label>Material Type</label>
-        <select id="rm-type">
-          <option value="oil">Fragrance Oil</option>
-          <option value="ethanol">Ethanol / Alcohol</option>
-          <option value="bottle">Bottles</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-      <div class="form-group span2"><label>Name / Description</label><input type="text" id="rm-name" placeholder="e.g. Desert Tonka Oil / 99% Ethanol"/></div>
-      <div class="form-group"><label>Quantity Added</label><input type="number" id="rm-qty" placeholder="e.g. 500"/></div>
-      <div class="form-group"><label>Unit</label>
-        <select id="rm-unit"><option>ml</option><option>Liters</option><option>Units</option><option>Kg</option><option>Grams</option></select>
-      </div>
-      <div class="form-group"><label>Low Stock Alert At</label><input type="number" id="rm-threshold" placeholder="e.g. 50"/></div>
-      <div class="form-group"><label>Cost (PKR, optional)</label><input type="number" id="rm-cost" placeholder="optional"/></div>
+      <div class="form-group span2"><label>Type</label><select id="rm-type"><option value="oil">Fragrance Oil</option><option value="ethanol">Ethanol</option><option value="bottle">Bottles</option><option value="other">Other</option></select></div>
+      <div class="form-group span2"><label>Name</label><input type="text" id="rm-name"/></div>
+      <div class="form-group"><label>Quantity</label><input type="number" id="rm-qty"/></div>
+      <div class="form-group"><label>Unit</label><select id="rm-unit"><option>ml</option><option>Liters</option><option>Units</option><option>Kg</option></select></div>
+      <div class="form-group"><label>Alert below</label><input type="number" id="rm-threshold" value="50"/></div>
     </div>
     <div class="mt"><button class="btn btn-primary btn-full" onclick="addRawMaterial()">Save</button></div>
   </div>
@@ -414,450 +354,426 @@
 
 <div class="modal-bg hidden" id="modal-production">
   <div class="modal">
-    <div class="modal-header"><div class="modal-title">Log Production Batch</div><button class="close-btn" onclick="closeModal('modal-production')">✕</button></div>
+    <div class="modal-header"><div class="modal-title">Log Production</div><button class="close-btn" onclick="closeModal('modal-production')">✕</button></div>
     <div class="form-grid">
-      <div class="form-group span2"><label>Product Produced</label><select id="prod-batch-sku"></select></div>
+      <div class="form-group span2"><label>Product</label><select id="prod-batch-sku" onchange="updateProdCalc()"></select></div>
       <div class="form-group span2"><label>Units Produced</label><input type="number" id="prod-batch-qty" min="1" value="1" oninput="updateProdCalc()"/></div>
-      <div class="form-group span2">
-        <div style="background:var(--accent-dim);border:1px solid var(--accent);border-radius:var(--radius-sm);padding:12px;font-size:13px" id="prod-calc-info">
-          Select a product to see auto-calculated raw material usage.
-        </div>
-      </div>
-      <div class="form-group span2"><label>Notes (optional)</label><input type="text" id="prod-batch-notes" placeholder="Batch details"/></div>
+      <div class="form-group span2"><div style="background:var(--accent-dim);border:1px solid var(--accent);border-radius:var(--radius-sm);padding:12px;font-size:13px" id="prod-calc-info">Select a product to see material usage.</div></div>
+      <div class="form-group span2"><label>Notes</label><input type="text" id="prod-batch-notes"/></div>
     </div>
     <div class="mt"><button class="btn btn-primary btn-full" onclick="logProduction()">Log Production</button></div>
   </div>
 </div>
 
-<div class="modal-bg hidden" id="modal-import">
+<div class="modal-bg hidden" id="modal-adduser">
   <div class="modal">
-    <div class="modal-header"><div class="modal-title">Restore Backup</div><button class="close-btn" onclick="closeModal('modal-import')">✕</button></div>
-    <p style="font-size:13px;color:var(--text2);margin-bottom:14px">Select a previously exported ZIAU backup JSON file. This will overwrite all current data.</p>
-    <input type="file" id="import-file" accept=".json" style="margin-bottom:14px"/>
-    <button class="btn btn-primary btn-full" onclick="importData()">Restore</button>
+    <div class="modal-header"><div class="modal-title">Add Team Member</div><button class="close-btn" onclick="closeModal('modal-adduser')">✕</button></div>
+    <div class="form-grid">
+      <div class="form-group span2"><label>Username</label><input type="text" id="new-username" placeholder="e.g. ahmed"/></div>
+      <div class="form-group span2"><label>Password</label><input type="text" id="new-password" placeholder="e.g. ziau2024"/></div>
+      <div class="form-group span2"><label>Role</label><select id="new-role"><option value="staff">Staff</option><option value="admin">Admin</option></select></div>
+    </div>
+    <div class="mt"><button class="btn btn-primary btn-full" onclick="addUser()">Add User</button></div>
   </div>
 </div>
 
 <script>
-// ─── FRAGRANCES & FORMULAS ───────────────────────────────────────────────────
+const SUPABASE_URL = 'https://oktuxqfogagwrifuguep.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rdHV4cWZvZ2Fnd3JpZnVndWVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwNjgyMjUsImV4cCI6MjA5NzY0NDIyNX0.4iv_qj0sh8eyQT0BtCIbNRVAL-wUb5YY6fPwGBarxLI';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
 const FRAGRANCES = ['Desert Tonka','Signature','Desire','Najm','Sovereign','Bloom'];
+const FORMULA = {'50ml':{oil:15,ethanol:35},'10ml':{oil:3,ethanol:7},'giftbox':{oil:18,ethanol:42},'other':{oil:0,ethanol:0}};
 
-// ml of oil and ethanol per bottle type
-const FORMULA = {
-  '50ml':    { oil: 15, ethanol: 35 },
-  '10ml':    { oil: 3,  ethanol: 7  },
-  'giftbox': { oil: 18, ethanol: 42 }, // 50ml + 10ml combined
-  'other':   { oil: 0,  ethanol: 0  }
-};
-
-// ─── DATA ────────────────────────────────────────────────────────────────────
-let data = {
-  products: [],
-  sales: [],
-  restocks: [],
-  rawMaterials: [],
-  production: [],
-  logs: [],
-  settings: {
-    ethanolRate: 1, // PKR per ml
-    oilRates: {
-      'Desert Tonka': 0,
-      'Signature': 0,
-      'Desire': 0,
-      'Najm': 0,
-      'Sovereign': 0,
-      'Bloom': 0
-    }
-  }
-};
-
-function save() { localStorage.setItem('ziau_v1', JSON.stringify(data)); }
-
-function load() {
-  const d = localStorage.getItem('ziau_v1');
-  if (d) { try { data = JSON.parse(d); } catch(e) {} }
-  // Ensure settings exist
-  if (!data.settings) data.settings = { ethanolRate: 1, oilRates: {} };
-  if (!data.settings.oilRates) data.settings.oilRates = {};
-  FRAGRANCES.forEach(f => { if (!data.settings.oilRates[f]) data.settings.oilRates[f] = 0; });
-  // Seed SKUs if first load
-  if (!data.products.length) seedSKUs();
-}
-
-function seedSKUs() {
-  const types = [
-    { suffix: '50ml', type: '50ml', skuSuffix: '50', threshold: 5 },
-    { suffix: '10ml', type: '10ml', skuSuffix: '10', threshold: 10 },
-  ];
-  FRAGRANCES.forEach(frag => {
-    const code = frag.replace(/\s+/g,'').substring(0,3).toUpperCase();
-    types.forEach(t => {
-      data.products.push({
-        id: uid(), name: `${frag} ${t.suffix}`,
-        skuCode: `${code}-${t.skuSuffix}`,
-        type: t.type, fragrance: frag,
-        price: 0, initialStock: 0, threshold: t.threshold,
-        createdAt: now()
-      });
-    });
-    // Gift box per fragrance
-    data.products.push({
-      id: uid(), name: `${frag} Gift Box`,
-      skuCode: `${code}-GB`,
-      type: 'giftbox', fragrance: frag,
-      price: 0, initialStock: 0, threshold: 3,
-      createdAt: now()
-    });
-  });
-  addLog('🎉','ZIAU app initialized with all SKUs pre-loaded');
-  save();
-}
+let currentUser = null;
+let isAdmin = false;
+let cache = { products:[], sales:[], rawMaterials:[], production:[], logs:[], settings:{ethanolRate:1,oilRates:{}} };
+let currentPage = 'dashboard';
+let salesFilter = 'all';
+let dark = true;
 
 // ─── HELPERS ─────────────────────────────────────────────────────────────────
-function now() { return new Date().toISOString(); }
-function uid() { return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
-function fmtPKR(n) { n=Number(n)||0; return 'PKR '+n.toLocaleString('en-PK',{maximumFractionDigits:0}); }
-function fmtDate(iso) { return new Date(iso).toLocaleDateString('en-PK',{day:'2-digit',month:'short',year:'numeric'}); }
-function fmtDateTime(iso) { return new Date(iso).toLocaleString('en-PK',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}); }
-function isToday(iso) { return new Date(iso).toDateString()===new Date().toDateString(); }
-function isThisMonth(iso) { const d=new Date(iso),t=new Date(); return d.getMonth()===t.getMonth()&&d.getFullYear()===t.getFullYear(); }
+function fmtPKR(n){return 'PKR '+(Number(n)||0).toLocaleString('en-PK',{maximumFractionDigits:0});}
+function fmtDate(iso){return new Date(iso).toLocaleDateString('en-PK',{day:'2-digit',month:'short',year:'numeric'});}
+function fmtDT(iso){return new Date(iso).toLocaleString('en-PK',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});}
+function isToday(iso){return new Date(iso).toDateString()===new Date().toDateString();}
+function isThisMonth(iso){const d=new Date(iso),t=new Date();return d.getMonth()===t.getMonth()&&d.getFullYear()===t.getFullYear();}
 
-function getProductStock(pid) {
-  const p = data.products.find(x=>x.id===pid); if (!p) return 0;
-  const sold = data.sales.filter(s=>s.productId===pid).reduce((a,s)=>a+s.qty,0);
-  const restocked = data.restocks.filter(r=>r.productId===pid).reduce((a,r)=>a+r.qty,0);
-  const produced = data.production.filter(r=>r.productId===pid).reduce((a,r)=>a+r.qty,0);
-  return (Number(p.initialStock)||0)+restocked+produced-sold;
-}
-
-function calcCostPrice(product) {
-  const formula = FORMULA[product.type] || FORMULA['other'];
-  const ethanolCost = formula.ethanol * (data.settings.ethanolRate || 0);
-  const oilRate = product.fragrance ? (data.settings.oilRates[product.fragrance] || 0) : 0;
-  const oilCost = formula.oil * oilRate;
-  return ethanolCost + oilCost;
-}
-
-function addLog(icon, text) {
-  data.logs.unshift({id:uid(),icon,text,ts:now()});
-  if(data.logs.length>300) data.logs=data.logs.slice(0,300);
-}
-
-function toast(msg, type='success') {
+function toast(msg,type='success'){
   const t=document.createElement('div');
   t.style.cssText=`position:fixed;top:70px;left:50%;transform:translateX(-50%);background:${type==='error'?'var(--red)':'var(--accent)'};color:${type==='error'?'#fff':'#000'};padding:10px 18px;border-radius:8px;font-size:13px;font-weight:600;z-index:999;box-shadow:0 4px 20px rgba(0,0,0,0.3);`;
-  t.textContent=msg; document.body.appendChild(t);
-  setTimeout(()=>t.remove(),2500);
+  t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2500);
+}
+
+function getStock(pid){
+  const p=cache.products.find(x=>x.id===pid);if(!p)return 0;
+  const sold=cache.sales.filter(s=>s.product_id===pid).reduce((a,s)=>a+s.qty,0);
+  const restocked=cache.restocks?cache.restocks.filter(r=>r.product_id===pid).reduce((a,r)=>a+r.qty,0):0;
+  const produced=cache.production.filter(r=>r.product_id===pid).reduce((a,r)=>a+r.qty,0);
+  return (p.initial_stock||0)+restocked+produced-sold;
+}
+
+function calcCost(p){
+  const f=FORMULA[p.type]||FORMULA['other'];
+  const ethCost=f.ethanol*(cache.settings.ethanolRate||0);
+  const oilRate=p.fragrance?(cache.settings.oilRates[p.fragrance]||0):0;
+  return f.oil*oilRate+ethCost;
+}
+
+async function addLog(icon,text){
+  await sb.from('logs').insert({icon,text,created_by:currentUser});
+}
+
+// ─── AUTH ─────────────────────────────────────────────────────────────────────
+async function doLogin(){
+  const username=document.getElementById('login-user').value.trim();
+  const password=document.getElementById('login-pass').value.trim();
+  if(!username||!password)return;
+  const {data,error}=await sb.from('users').select('*').eq('username',username).eq('password',password).single();
+  if(error||!data){document.getElementById('login-error').style.display='block';return;}
+  currentUser=data.username;
+  isAdmin=data.role==='admin';
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('app-screen').style.display='flex';
+  document.getElementById('user-badge').textContent=currentUser+(isAdmin?' 🛡️':'');
+  if(isAdmin){
+    document.getElementById('app-screen').classList.add('is-admin');
+    document.getElementById('admin-nav-btn').style.display='flex';
+  }
+  await loadAllData();
+  renderDashboard();
+}
+
+function doLogout(){
+  currentUser=null;isAdmin=false;
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('app-screen').style.display='none';
+  document.getElementById('app-screen').classList.remove('is-admin');
+  document.getElementById('login-user').value='';
+  document.getElementById('login-pass').value='';
+  document.getElementById('login-error').style.display='none';
+}
+
+// ─── DATA LOAD ────────────────────────────────────────────────────────────────
+async function loadAllData(){
+  const [products,sales,restocks,rawMats,production,logs,settings]=await Promise.all([
+    sb.from('products').select('*').order('name'),
+    sb.from('sales').select('*').order('created_at',{ascending:false}),
+    sb.from('restocks').select('*'),
+    sb.from('raw_materials').select('*'),
+    sb.from('production').select('*'),
+    sb.from('logs').select('*').order('created_at',{ascending:false}).limit(200),
+    sb.from('settings').select('*').single()
+  ]);
+  cache.products=products.data||[];
+  cache.sales=sales.data||[];
+  cache.restocks=restocks.data||[];
+  cache.rawMaterials=rawMats.data||[];
+  cache.production=production.data||[];
+  cache.logs=logs.data||[];
+  if(settings.data){
+    cache.settings.ethanolRate=settings.data.ethanol_rate||1;
+    cache.settings.oilRates=settings.data.oil_rates||{};
+  }
+  // Seed SKUs if none
+  if(!cache.products.length && isAdmin) await seedSKUs();
+}
+
+async function seedSKUs(){
+  const rows=[];
+  FRAGRANCES.forEach(frag=>{
+    const code=frag.replace(/\s+/g,'').substring(0,3).toUpperCase();
+    rows.push({name:`${frag} 50ml`,sku_code:`${code}-50`,type:'50ml',fragrance:frag,price:0,initial_stock:0,threshold:5});
+    rows.push({name:`${frag} 10ml`,sku_code:`${code}-10`,type:'10ml',fragrance:frag,price:0,initial_stock:0,threshold:10});
+    rows.push({name:`${frag} Gift Box`,sku_code:`${code}-GB`,type:'giftbox',fragrance:frag,price:0,initial_stock:0,threshold:3});
+  });
+  await sb.from('products').insert(rows);
+  const {data}=await sb.from('products').select('*').order('name');
+  cache.products=data||[];
+  await addLog('🎉','ZIAU app initialized with all SKUs');
 }
 
 // ─── NAVIGATION ──────────────────────────────────────────────────────────────
-let currentPage='dashboard';
-function navigate(page,btn) {
+function navigate(page,btn){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('page-'+page).classList.add('active');
-  if(btn) btn.classList.add('active');
-  currentPage=page; renderPage(page);
-}
-function renderPage(page) {
-  if(page==='dashboard') renderDashboard();
-  if(page==='sales') renderSales(salesFilter||'all');
-  if(page==='inventory'){renderSKUList();renderRawList();renderProductionList();}
-  if(page==='analytics') renderAnalytics();
-  if(page==='log') renderFullLog();
-  if(page==='settings') renderSettings();
+  if(btn)btn.classList.add('active');
+  currentPage=page;renderPage(page);
 }
 
-// ─── THEME ───────────────────────────────────────────────────────────────────
-let dark=true;
-function toggleTheme() {
-  dark=!dark; document.body.classList.toggle('light',!dark);
-  document.getElementById('themeBtn').textContent=dark?'🌙':'☀️';
+function renderPage(page){
+  if(page==='dashboard')renderDashboard();
+  if(page==='sales')renderSales(salesFilter);
+  if(page==='inventory'){renderSKUList();renderRawList();renderProductionList();}
+  if(page==='analytics')renderAnalytics();
+  if(page==='log')renderFullLog();
+  if(page==='admin')renderAdmin();
 }
+
+function toggleTheme(){dark=!dark;document.body.classList.toggle('light',!dark);document.getElementById('themeBtn').textContent=dark?'🌙':'☀️';}
 
 // ─── MODALS ──────────────────────────────────────────────────────────────────
-function openModal(id) { populateDropdowns(); document.getElementById(id).classList.remove('hidden'); }
-function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
-document.querySelectorAll('.modal-bg').forEach(m=>{ m.addEventListener('click',e=>{ if(e.target===m) m.classList.add('hidden'); }); });
+function openModal(id){populateDropdowns();document.getElementById(id).classList.remove('hidden');}
+function closeModal(id){document.getElementById(id).classList.add('hidden');}
+document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.add('hidden');}));
 
-function populateDropdowns() {
+function populateDropdowns(){
   const fill=(elId)=>{
-    const el=document.getElementById(elId); if(!el) return;
-    el.innerHTML=data.products.length
-      ? data.products.map(p=>`<option value="${p.id}">${p.name} — Stock: ${getProductStock(p.id)}</option>`).join('')
-      : '<option value="">No products</option>';
+    const el=document.getElementById(elId);if(!el)return;
+    el.innerHTML=cache.products.length?cache.products.map(p=>`<option value="${p.id}">${p.name} — Stock: ${getStock(p.id)}</option>`).join(''):'<option>No products</option>';
   };
-  fill('sale-sku'); fill('restock-sku'); fill('prod-batch-sku');
+  fill('sale-sku');fill('restock-sku');fill('prod-batch-sku');
   const ss=document.getElementById('sale-sku');
-  if(ss){
-    const onSkuChange=()=>{ const p=data.products.find(x=>x.id===ss.value); if(p){document.getElementById('sale-price').value=p.price;updateSaleTotal();} };
-    ss.onchange=onSkuChange; onSkuChange();
-  }
-  const ps=document.getElementById('prod-batch-sku');
-  if(ps){ ps.onchange=updateProdCalc; updateProdCalc(); }
+  if(ss){ss.onchange=()=>{const p=cache.products.find(x=>x.id===ss.value);if(p){document.getElementById('sale-price').value=p.price;updateSaleTotal();}};ss.onchange();}
 }
 
-function updateSaleTotal() {
+function updateSaleTotal(){
   const qty=Number(document.getElementById('sale-qty').value)||0;
   const price=Number(document.getElementById('sale-price').value)||0;
   document.getElementById('sale-total').value=fmtPKR(qty*price);
 }
 
-function updateProdCalc() {
+function updateProdCalc(){
   const pid=document.getElementById('prod-batch-sku').value;
   const qty=Number(document.getElementById('prod-batch-qty').value)||1;
-  const p=data.products.find(x=>x.id===pid);
+  const p=cache.products.find(x=>x.id===pid);
   const el=document.getElementById('prod-calc-info');
-  if(!p){el.innerHTML='Select a product to see auto-calculated raw material usage.';return;}
+  if(!p){el.innerHTML='Select a product.';return;}
   const f=FORMULA[p.type]||FORMULA['other'];
-  el.innerHTML=`<strong style="color:var(--accent)">${p.name} × ${qty}</strong><br>
-    🫙 Oil: <strong>${f.oil*qty}ml</strong> ${p.fragrance?'('+p.fragrance+')':''}<br>
-    🧴 Ethanol: <strong>${f.ethanol*qty}ml</strong><br>
-    🍾 Bottles: <strong>${qty}</strong>`;
+  el.innerHTML=`<strong style="color:var(--accent)">${p.name} × ${qty}</strong><br>🫙 Oil: <strong>${f.oil*qty}ml</strong><br>🧴 Ethanol: <strong>${f.ethanol*qty}ml</strong><br>🍾 Bottles: <strong>${qty}</strong>`;
 }
 
 // ─── PRODUCTS ────────────────────────────────────────────────────────────────
-function addProduct() {
+async function addProduct(){
   const name=document.getElementById('prod-name').value.trim();
-  const skuCode=document.getElementById('prod-sku').value.trim();
+  const sku_code=document.getElementById('prod-sku').value.trim();
   const type=document.getElementById('prod-type').value;
   const price=Number(document.getElementById('prod-price').value)||0;
-  const initialStock=Number(document.getElementById('prod-stock').value)||0;
+  const initial_stock=Number(document.getElementById('prod-stock').value)||0;
   const threshold=Number(document.getElementById('prod-threshold').value)||5;
   const fragrance=document.getElementById('prod-fragrance').value;
-  if(!name||!skuCode) return toast('Name and SKU Code required','error');
-  if(data.products.find(p=>p.skuCode===skuCode)) return toast('SKU Code already exists','error');
-  data.products.push({id:uid(),name,skuCode,type,fragrance,price,initialStock,threshold,createdAt:now()});
-  addLog('📦',`Added product <strong>${name}</strong> (${skuCode})`);
-  save(); closeModal('modal-product'); toast('Product added!');
-  ['prod-name','prod-sku'].forEach(id=>document.getElementById(id).value='');
-  renderPage(currentPage);
+  if(!name||!sku_code)return toast('Name and SKU required','error');
+  const{error}=await sb.from('products').insert({name,sku_code,type,fragrance,price,initial_stock,threshold});
+  if(error)return toast('Error: '+error.message,'error');
+  await addLog('📦',`Added product <strong>${name}</strong>`);
+  toast('Product added!');closeModal('modal-product');
+  await loadAllData();renderPage(currentPage);
 }
 
 // ─── SALES ───────────────────────────────────────────────────────────────────
-function addSale() {
-  const productId=document.getElementById('sale-sku').value;
+async function addSale(){
+  const product_id=document.getElementById('sale-sku').value;
   const qty=Number(document.getElementById('sale-qty').value)||0;
   const price=Number(document.getElementById('sale-price').value)||0;
   const payment=document.getElementById('sale-payment').value;
   const notes=document.getElementById('sale-notes').value;
   const seller=document.getElementById('sale-seller').value.trim();
   const customer=document.getElementById('sale-customer').value.trim();
-  if(!productId) return toast('Select a product','error');
-  if(qty<1) return toast('Quantity must be at least 1','error');
-  const stock=getProductStock(productId);
-  if(qty>stock) return toast(`Only ${stock} units in stock`,'error');
-  const p=data.products.find(x=>x.id===productId);
-  const s={id:uid(),productId,qty,price,total:qty*price,payment,notes,seller,customer,ts:now()};
-  data.sales.push(s);
-  addLog('🧾',`Sale: <strong>${qty}× ${p.name}</strong> — ${fmtPKR(s.total)} · By: ${seller||'—'} · To: ${customer||'—'}`);
-  save(); closeModal('modal-sale');
-  ['sale-qty','sale-notes','sale-seller','sale-customer'].forEach(id=>document.getElementById(id).value=id==='sale-qty'?1:'');
-  toast('Sale recorded!'); renderPage(currentPage);
+  if(!product_id)return toast('Select a product','error');
+  if(qty<1)return toast('Qty must be at least 1','error');
+  const stock=getStock(product_id);
+  if(qty>stock)return toast(`Only ${stock} in stock`,'error');
+  const p=cache.products.find(x=>x.id===product_id);
+  const{error}=await sb.from('sales').insert({product_id,qty,price,total:qty*price,payment,notes,seller,customer,created_by:currentUser});
+  if(error)return toast('Error','error');
+  await addLog('🧾',`<strong>${currentUser}</strong> sold ${qty}× ${p.name} — ${fmtPKR(qty*price)} · To: ${customer||'—'}`);
+  toast('Sale recorded!');closeModal('modal-sale');
+  await loadAllData();renderPage(currentPage);
 }
 
-let salesFilter='all';
-function filterSales(f,btn) {
-  salesFilter=f;
+let _salesFilter='all';
+function filterSales(f,btn){
+  _salesFilter=f;
   document.querySelectorAll('#page-sales .tab-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active'); renderSales(f);
+  btn.classList.add('active');renderSales(f);
 }
-function renderSales(filter) {
-  let sales=[...data.sales].sort((a,b)=>new Date(b.ts)-new Date(a.ts));
-  if(filter==='today') sales=sales.filter(s=>isToday(s.ts));
-  if(filter==='month') sales=sales.filter(s=>isThisMonth(s.ts));
+
+function renderSales(filter){
+  let sales=[...cache.sales];
+  if(filter==='today')sales=sales.filter(s=>isToday(s.created_at));
+  if(filter==='month')sales=sales.filter(s=>isThisMonth(s.created_at));
   const tbody=document.getElementById('sales-table');
   const empty=document.getElementById('sales-empty');
   if(!sales.length){tbody.innerHTML='';empty.classList.remove('hidden');return;}
   empty.classList.add('hidden');
   tbody.innerHTML=sales.map(s=>{
-    const p=data.products.find(x=>x.id===s.productId);
+    const p=cache.products.find(x=>x.id===s.product_id);
+    const canDelete=isAdmin||s.created_by===currentUser;
     return `<tr>
-      <td class="mono" style="font-size:12px">${fmtDate(s.ts)}</td>
-      <td><div class="name">${p?p.name:'Deleted'}</div><div style="font-size:11px;color:var(--text3)">${p?p.skuCode:''}</div></td>
+      <td class="mono" style="font-size:11px">${fmtDate(s.created_at)}</td>
+      <td><div class="name">${p?p.name:'?'}</div><div style="font-size:11px;color:var(--text3)">${p?p.sku_code:''}</div></td>
       <td>${s.qty}</td>
       <td class="mono" style="color:var(--accent)">${fmtPKR(s.total)}</td>
-      <td style="font-size:13px">${s.seller||'—'}</td>
-      <td style="font-size:13px">${s.customer||'—'}</td>
-      <td><button onclick="deleteSale('${s.id}')" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:16px">🗑</button></td>
+      <td>${s.seller||'—'}</td>
+      <td>${s.customer||'—'}</td>
+      <td><span class="badge badge-gold">${s.created_by||'—'}</span></td>
+      <td>${canDelete?`<button onclick="deleteSale('${s.id}')" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:16px">🗑</button>`:'—'}</td>
     </tr>`;
   }).join('');
 }
-function deleteSale(id) {
-  if(!confirm('Delete this sale? Stock will be restored.')) return;
-  const s=data.sales.find(x=>x.id===id);
-  const p=data.products.find(x=>x.id===s.productId);
-  data.sales=data.sales.filter(x=>x.id!==id);
-  addLog('🗑',`Deleted sale: <strong>${s.qty}× ${p?p.name:'?'}</strong>`);
-  save(); toast('Sale deleted'); renderPage(currentPage);
+
+async function deleteSale(id){
+  if(!confirm('Delete this sale?'))return;
+  const s=cache.sales.find(x=>x.id===id);
+  const p=cache.products.find(x=>x.id===s.product_id);
+  await sb.from('sales').delete().eq('id',id);
+  await addLog('🗑',`<strong>${currentUser}</strong> deleted sale: ${s.qty}× ${p?p.name:'?'}`);
+  toast('Deleted');await loadAllData();renderPage(currentPage);
 }
 
 // ─── RESTOCK ─────────────────────────────────────────────────────────────────
-function addRestock() {
-  const productId=document.getElementById('restock-sku').value;
+async function addRestock(){
+  const product_id=document.getElementById('restock-sku').value;
   const qty=Number(document.getElementById('restock-qty').value)||0;
   const supplier=document.getElementById('restock-supplier').value;
-  if(!productId||qty<1) return toast('Invalid entry','error');
-  const p=data.products.find(x=>x.id===productId);
-  data.restocks.push({id:uid(),productId,qty,supplier,ts:now()});
-  addLog('🔄',`Restocked <strong>${qty}× ${p.name}</strong>${supplier?' from '+supplier:''}`);
-  save(); closeModal('modal-restock'); toast('Restock logged!'); renderPage(currentPage);
+  if(!product_id||qty<1)return toast('Invalid','error');
+  const p=cache.products.find(x=>x.id===product_id);
+  await sb.from('restocks').insert({product_id,qty,supplier,created_by:currentUser});
+  await addLog('🔄',`<strong>${currentUser}</strong> restocked ${qty}× ${p.name}`);
+  toast('Restock logged!');closeModal('modal-restock');
+  await loadAllData();renderPage(currentPage);
 }
 
 // ─── RAW MATERIALS ───────────────────────────────────────────────────────────
-function addRawMaterial() {
+async function addRawMaterial(){
   const type=document.getElementById('rm-type').value;
   const name=document.getElementById('rm-name').value.trim();
   const qty=Number(document.getElementById('rm-qty').value)||0;
   const unit=document.getElementById('rm-unit').value;
   const threshold=Number(document.getElementById('rm-threshold').value)||50;
-  const cost=Number(document.getElementById('rm-cost').value)||0;
-  if(!name||qty<=0) return toast('Name and quantity required','error');
-  const existing=data.rawMaterials.find(m=>m.name.toLowerCase()===name.toLowerCase()&&m.type===type);
-  if(existing){existing.qty+=qty;existing.threshold=threshold;addLog('🧪',`Restocked raw: <strong>${name}</strong> +${qty} ${unit}`);}
-  else{data.rawMaterials.push({id:uid(),type,name,qty,unit,threshold,cost,ts:now()});addLog('🧪',`Added raw material: <strong>${name}</strong> ${qty} ${unit}`);}
-  save(); closeModal('modal-rawmat'); toast('Saved!'); renderPage(currentPage);
-  ['rm-name','rm-qty'].forEach(id=>document.getElementById(id).value='');
+  if(!name||qty<=0)return toast('Name and qty required','error');
+  const existing=cache.rawMaterials.find(m=>m.name.toLowerCase()===name.toLowerCase()&&m.type===type);
+  if(existing){
+    await sb.from('raw_materials').update({qty:existing.qty+qty,threshold}).eq('id',existing.id);
+    await addLog('🧪',`<strong>${currentUser}</strong> restocked ${name} +${qty} ${unit}`);
+  } else {
+    await sb.from('raw_materials').insert({type,name,qty,unit,threshold});
+    await addLog('🧪',`<strong>${currentUser}</strong> added raw material: ${name} ${qty} ${unit}`);
+  }
+  toast('Saved!');closeModal('modal-rawmat');
+  await loadAllData();renderPage(currentPage);
 }
 
 // ─── PRODUCTION ──────────────────────────────────────────────────────────────
-function logProduction() {
-  const productId=document.getElementById('prod-batch-sku').value;
+async function logProduction(){
+  const product_id=document.getElementById('prod-batch-sku').value;
   const qty=Number(document.getElementById('prod-batch-qty').value)||0;
   const notes=document.getElementById('prod-batch-notes').value;
-  if(!productId||qty<1) return toast('Invalid','error');
-  const p=data.products.find(x=>x.id===productId);
+  if(!product_id||qty<1)return toast('Invalid','error');
+  const p=cache.products.find(x=>x.id===product_id);
   const f=FORMULA[p.type]||FORMULA['other'];
-  const oilUsed=f.oil*qty;
-  const ethUsed=f.ethanol*qty;
-  const botUsed=qty;
+  const oil_used=f.oil*qty,eth_used=f.ethanol*qty,bot_used=qty;
 
-  // Deduct raw materials automatically
-  function deductRM(type, ml) {
-    if(ml<=0) return;
-    const mats=data.rawMaterials.filter(m=>m.type===type).sort((a,b)=>b.qty-a.qty);
+  // Deduct raw materials
+  async function deductRM(type,ml){
+    if(ml<=0)return;
+    const mats=cache.rawMaterials.filter(m=>m.type===type).sort((a,b)=>b.qty-a.qty);
     let rem=ml;
-    for(const m of mats){const take=Math.min(m.qty,rem);m.qty=Math.max(0,m.qty-take);rem-=take;if(!rem)break;}
+    for(const m of mats){const take=Math.min(m.qty,rem);await sb.from('raw_materials').update({qty:Math.max(0,m.qty-take)}).eq('id',m.id);rem-=take;if(!rem)break;}
   }
-  if(p.fragrance) deductRM('oil',oilUsed); else deductRM('oil',oilUsed);
-  deductRM('ethanol',ethUsed);
-  deductRM('bottle',botUsed);
-
-  data.production.push({id:uid(),productId,qty,oilUsed,ethUsed,botUsed,notes,fragrance:p.fragrance,ts:now()});
-  addLog('🏭',`Produced <strong>${qty}× ${p.name}</strong> — Oil:${oilUsed}ml · Eth:${ethUsed}ml · Bottles:${botUsed}`);
-  save(); closeModal('modal-production'); toast('Batch logged!'); renderPage(currentPage);
+  await deductRM('oil',oil_used);
+  await deductRM('ethanol',eth_used);
+  await deductRM('bottle',bot_used);
+  await sb.from('production').insert({product_id,qty,oil_used,eth_used,bot_used,notes,created_by:currentUser});
+  await addLog('🏭',`<strong>${currentUser}</strong> produced ${qty}× ${p.name} — Oil:${oil_used}ml Eth:${eth_used}ml`);
+  toast('Batch logged!');closeModal('modal-production');
+  await loadAllData();renderPage(currentPage);
 }
 
 // ─── RENDER SKU LIST ─────────────────────────────────────────────────────────
-function renderSKUList() {
+function renderSKUList(){
   const el=document.getElementById('sku-list');
-  if(!data.products.length){el.innerHTML=`<div class="empty"><div class="empty-icon">🧴</div><p>No products yet.</p></div>`;return;}
-
-  const groups = {};
-  data.products.forEach(p=>{
-    const grp = p.fragrance || p.type || 'Other';
-    if(!groups[grp]) groups[grp]=[];
-    groups[grp].push(p);
-  });
-
-  el.innerHTML=Object.entries(groups).map(([grp,prods])=>`
-    <div style="margin-bottom:6px;font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;padding:4px 0">${grp}</div>
+  if(!cache.products.length){el.innerHTML=`<div class="empty"><div class="empty-icon">🧴</div><p>No products yet.</p></div>`;return;}
+  const groups={};
+  cache.products.forEach(p=>{const g=p.fragrance||'Other';if(!groups[g])groups[g]=[];groups[g].push(p);});
+  el.innerHTML=Object.entries(groups).map(([g,prods])=>`
+    <div style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;padding:8px 0 4px">${g}</div>
     ${prods.map(p=>{
-      const stock=getProductStock(p.id);
-      const low=stock<=p.threshold;
-      const pct=Math.min(100,(stock/(Math.max(p.threshold*4,1)))*100);
-      const cost=calcCostPrice(p);
+      const stock=getStock(p.id);const low=stock<=p.threshold;
+      const pct=Math.min(100,(stock/Math.max(p.threshold*4,1))*100);
+      const cost=calcCost(p);
       return `<div class="card" style="margin-bottom:10px;padding:14px">
         <div class="flex-between">
-          <div><div style="font-weight:600;font-size:14px">${p.name}</div>
-          <div style="font-size:11px;color:var(--text3)">${p.skuCode} · ${p.type}</div></div>
+          <div><div style="font-weight:600">${p.name}</div><div style="font-size:11px;color:var(--text3)">${p.sku_code} · ${p.type}</div></div>
           <span class="badge ${stock===0?'badge-red':low?'badge-orange':'badge-green'}">${stock===0?'OUT':low?'LOW':'OK'}</span>
         </div>
-        <div class="flex-between" style="margin-top:10px">
-          <div style="font-size:13px">Stock: <strong>${stock}</strong></div>
-          <div style="font-size:13px">Price: <strong style="color:var(--accent)">${p.price?fmtPKR(p.price):'—'}</strong></div>
-          <div style="font-size:13px">Cost: <strong style="color:var(--text2)">${cost?fmtPKR(cost):'—'}</strong></div>
+        <div class="flex-between" style="margin-top:10px;font-size:13px">
+          <span>Stock: <strong>${stock}</strong></span>
+          <span>Price: <strong style="color:var(--accent)">${p.price?fmtPKR(p.price):'—'}</strong></span>
+          <span>Cost: <strong>${cost?fmtPKR(cost):'—'}</strong></span>
         </div>
         <div class="progress-bar"><div class="progress-fill ${stock===0?'red':low?'':'green'}" style="width:${pct}%"></div></div>
-        <div style="display:flex;gap:8px;margin-top:10px">
-          <button onclick="deleteProduct('${p.id}')" class="btn btn-danger btn-sm">Delete</button>
-        </div>
+        ${isAdmin?`<div style="margin-top:10px"><button onclick="deleteProduct('${p.id}')" class="btn btn-danger btn-sm">Delete</button></div>`:''}
       </div>`;
     }).join('')}`).join('');
 }
 
-function deleteProduct(id) {
-  if(!confirm('Delete this product?')) return;
-  const p=data.products.find(x=>x.id===id);
-  data.products=data.products.filter(x=>x.id!==id);
-  addLog('🗑',`Deleted product <strong>${p.name}</strong>`);
-  save(); toast('Deleted'); renderPage(currentPage);
+async function deleteProduct(id){
+  if(!confirm('Delete this product?'))return;
+  const p=cache.products.find(x=>x.id===id);
+  await sb.from('products').delete().eq('id',id);
+  await addLog('🗑',`<strong>${currentUser}</strong> deleted product ${p.name}`);
+  toast('Deleted');await loadAllData();renderPage(currentPage);
 }
 
-// ─── RENDER RAW MATERIALS ─────────────────────────────────────────────────────
-function renderRawList() {
+// ─── RENDER RAW ──────────────────────────────────────────────────────────────
+function renderRawList(){
   const el=document.getElementById('raw-list');
-  if(!data.rawMaterials.length){el.innerHTML=`<div class="empty"><div class="empty-icon">🧪</div><p>No raw materials added yet.</p></div>`;return;}
+  if(!cache.rawMaterials.length){el.innerHTML=`<div class="empty"><div class="empty-icon">🧪</div><p>No raw materials.</p></div>`;return;}
   const icons={oil:'🫙',ethanol:'🧴',bottle:'🍾',other:'📦'};
-  el.innerHTML=data.rawMaterials.map(m=>{
+  el.innerHTML=cache.rawMaterials.map(m=>{
     const low=m.qty<=m.threshold;
-    const pct=Math.min(100,(m.qty/(Math.max(m.threshold*4,1)))*100);
+    const pct=Math.min(100,(m.qty/Math.max(m.threshold*4,1))*100);
     return `<div class="card" style="margin-bottom:10px">
       <div class="flex-between">
-        <div><div style="font-weight:600">${icons[m.type]||'📦'} ${m.name}</div>
-        <div style="font-size:12px;color:var(--text3)">${m.type}</div></div>
+        <div><div style="font-weight:600">${icons[m.type]||'📦'} ${m.name}</div><div style="font-size:12px;color:var(--text3)">${m.type}</div></div>
         ${low?`<span class="badge badge-red">⚠️ LOW</span>`:`<span class="badge badge-green">OK</span>`}
       </div>
-      <div style="font-size:22px;font-weight:700;font-family:'DM Mono',monospace;color:${low?'var(--red)':'var(--text)'};margin-top:8px">
-        ${m.qty} <span style="font-size:14px;color:var(--text3)">${m.unit}</span>
-      </div>
+      <div style="font-size:22px;font-weight:700;font-family:'DM Mono',monospace;color:${low?'var(--red)':'var(--text)'};margin-top:8px">${m.qty} <span style="font-size:14px;color:var(--text3)">${m.unit}</span></div>
       <div class="progress-bar"><div class="progress-fill ${low?'red':''}" style="width:${pct}%"></div></div>
       <div style="font-size:12px;color:var(--text3);margin-top:4px">Alert below ${m.threshold} ${m.unit}</div>
       <div style="display:flex;gap:8px;margin-top:10px">
-        <button onclick="deductRaw('${m.id}')" class="btn btn-ghost btn-sm">− Deduct Use</button>
-        <button onclick="deleteRaw('${m.id}')" class="btn btn-danger btn-sm">Delete</button>
+        <button onclick="deductRaw('${m.id}')" class="btn btn-ghost btn-sm">− Deduct</button>
+        ${isAdmin?`<button onclick="deleteRaw('${m.id}')" class="btn btn-danger btn-sm">Delete</button>`:''}
       </div>
     </div>`;
   }).join('');
 }
-function deductRaw(id) {
-  const m=data.rawMaterials.find(x=>x.id===id);
-  const qty=Number(prompt(`Deduct how much ${m.unit} from "${m.name}"? (Stock: ${m.qty})`));
-  if(isNaN(qty)||qty<=0) return;
-  m.qty=Math.max(0,m.qty-qty);
-  addLog('➖',`Used <strong>${qty} ${m.unit}</strong> of ${m.name}`);
-  save(); toast('Deducted!'); renderRawList();
-}
-function deleteRaw(id) {
-  if(!confirm('Delete this raw material?')) return;
-  const m=data.rawMaterials.find(x=>x.id===id);
-  data.rawMaterials=data.rawMaterials.filter(x=>x.id!==id);
-  addLog('🗑',`Deleted raw material <strong>${m.name}</strong>`);
-  save(); toast('Deleted'); renderRawList();
+
+async function deductRaw(id){
+  const m=cache.rawMaterials.find(x=>x.id===id);
+  const qty=Number(prompt(`Deduct how much ${m.unit} from "${m.name}"? (Current: ${m.qty})`));
+  if(isNaN(qty)||qty<=0)return;
+  await sb.from('raw_materials').update({qty:Math.max(0,m.qty-qty)}).eq('id',id);
+  await addLog('➖',`<strong>${currentUser}</strong> used ${qty} ${m.unit} of ${m.name}`);
+  toast('Deducted!');await loadAllData();renderRawList();
 }
 
-// ─── RENDER PRODUCTION ───────────────────────────────────────────────────────
-function renderProductionList() {
+async function deleteRaw(id){
+  if(!confirm('Delete?'))return;
+  const m=cache.rawMaterials.find(x=>x.id===id);
+  await sb.from('raw_materials').delete().eq('id',id);
+  await addLog('🗑',`<strong>${currentUser}</strong> deleted raw material ${m.name}`);
+  toast('Deleted');await loadAllData();renderRawList();
+}
+
+function renderProductionList(){
   const el=document.getElementById('production-list');
-  if(!data.production.length){el.innerHTML=`<div class="empty"><div class="empty-icon">🏭</div><p>No production batches yet.</p></div>`;return;}
-  const sorted=[...data.production].sort((a,b)=>new Date(b.ts)-new Date(a.ts));
+  if(!cache.production.length){el.innerHTML=`<div class="empty"><div class="empty-icon">🏭</div><p>No production batches.</p></div>`;return;}
+  const sorted=[...cache.production].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
   el.innerHTML=`<div class="card"><div class="table-wrap"><table>
-    <thead><tr><th>Date</th><th>Product</th><th>Units</th><th>Oil Used</th><th>Ethanol</th><th>Bottles</th></tr></thead>
-    <tbody>${sorted.map(b=>{
-      const p=data.products.find(x=>x.id===b.productId);
-      return `<tr>
-        <td class="mono" style="font-size:11px">${fmtDate(b.ts)}</td>
-        <td class="name">${p?p.name:'?'}</td>
-        <td>${b.qty}</td>
-        <td>${b.oilUsed?b.oilUsed+'ml':'—'}</td>
-        <td>${b.ethUsed?b.ethUsed+'ml':'—'}</td>
-        <td>${b.botUsed||'—'}</td>
-      </tr>`;
-    }).join('')}</tbody>
+    <thead><tr><th>Date</th><th>Product</th><th>Units</th><th>Oil</th><th>Eth</th><th>By</th></tr></thead>
+    <tbody>${sorted.map(b=>{const p=cache.products.find(x=>x.id===b.product_id);return`<tr>
+      <td class="mono" style="font-size:11px">${fmtDate(b.created_at)}</td>
+      <td class="name">${p?p.name:'?'}</td><td>${b.qty}</td>
+      <td>${b.oil_used?b.oil_used+'ml':'—'}</td><td>${b.eth_used?b.eth_used+'ml':'—'}</td>
+      <td><span class="badge badge-gold">${b.created_by||'—'}</span></td>
+    </tr>`;}).join('')}</tbody>
   </table></div></div>`;
 }
 
-function switchInvTab(tab,btn) {
+function switchInvTab(tab,btn){
   document.querySelectorAll('#page-inventory .tab-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('inv-finished').classList.toggle('hidden',tab!=='finished');
@@ -866,271 +782,146 @@ function switchInvTab(tab,btn) {
 }
 
 // ─── DASHBOARD ───────────────────────────────────────────────────────────────
-function renderDashboard() {
-  const todaySales=data.sales.filter(s=>isToday(s.ts));
-  const monthSales=data.sales.filter(s=>isThisMonth(s.ts));
+function renderDashboard(){
+  const todaySales=cache.sales.filter(s=>isToday(s.created_at));
+  const monthSales=cache.sales.filter(s=>isThisMonth(s.created_at));
   const sum=arr=>arr.reduce((a,s)=>a+s.total,0);
   const units=arr=>arr.reduce((a,s)=>a+s.qty,0);
   document.getElementById('stat-today-rev').textContent=fmtPKR(sum(todaySales));
-  document.getElementById('stat-today-units').textContent=units(todaySales)+' units sold';
+  document.getElementById('stat-today-u').textContent=units(todaySales)+' units';
   document.getElementById('stat-month-rev').textContent=fmtPKR(sum(monthSales));
-  document.getElementById('stat-month-units').textContent=units(monthSales)+' units sold';
-  document.getElementById('stat-total-rev').textContent=fmtPKR(sum(data.sales));
-  document.getElementById('stat-total-sales').textContent=data.sales.length+' total sales';
-
+  document.getElementById('stat-month-u').textContent=units(monthSales)+' units';
+  document.getElementById('stat-total-rev').textContent=fmtPKR(sum(cache.sales));
+  document.getElementById('stat-total-s').textContent=cache.sales.length+' sales';
   let totalCOGS=0;
-  data.sales.forEach(s=>{
-    const p=data.products.find(x=>x.id===s.productId);
-    if(p){ const cost=calcCostPrice(p); if(cost) totalCOGS+=cost*s.qty; }
-  });
-  const totalRev=sum(data.sales);
-  const profit=totalRev-totalCOGS;
-  const margin=totalRev?Math.round((profit/totalRev)*100):0;
-  const hasRates=data.settings.ethanolRate>0||Object.values(data.settings.oilRates).some(r=>r>0);
+  cache.sales.forEach(s=>{const p=cache.products.find(x=>x.id===s.product_id);if(p){const c=calcCost(p);totalCOGS+=c*s.qty;}});
+  const totalRev=sum(cache.sales);const profit=totalRev-totalCOGS;const margin=totalRev?Math.round((profit/totalRev)*100):0;
+  const hasRates=cache.settings.ethanolRate>0||Object.values(cache.settings.oilRates).some(r=>r>0);
   document.getElementById('stat-profit').textContent=hasRates?fmtPKR(profit):'Set rates';
-  document.getElementById('stat-margin').textContent=hasRates?margin+'% margin':'in Settings';
-
-  renderAlerts();
-  renderRevenueChart();
-  renderBestSellers();
-  renderStockOverview();
-
+  document.getElementById('stat-margin').textContent=hasRates?margin+'% margin':'in Admin';
+  renderAlerts();renderRevenueChart();renderBestSellers();renderStockOverview();
   const logEl=document.getElementById('recent-log');
-  const logs=data.logs.slice(0,8);
-  if(!logs.length){logEl.innerHTML=`<div class="empty"><p>No activity yet.</p></div>`;return;}
-  logEl.innerHTML=logs.map(l=>`<div class="log-item"><div class="log-icon">${l.icon}</div><div><div class="log-text">${l.text}</div><div class="log-time">${fmtDateTime(l.ts)}</div></div></div>`).join('');
+  const logs=cache.logs.slice(0,8);
+  logEl.innerHTML=logs.length?logs.map(l=>`<div class="log-item"><div class="log-icon">${l.icon}</div><div><div class="log-text">${l.text}</div><div class="log-time">${fmtDT(l.created_at)}</div></div></div>`).join(''):`<div class="empty"><p>No activity yet.</p></div>`;
 }
 
-function renderAlerts() {
+function renderAlerts(){
   const alerts=[];
-  data.products.forEach(p=>{
-    const stock=getProductStock(p.id);
-    if(stock===0) alerts.push(`<div class="alert alert-red">🚨 <strong>${p.name}</strong> is OUT OF STOCK</div>`);
-    else if(stock<=p.threshold) alerts.push(`<div class="alert alert-orange">⚠️ <strong>${p.name}</strong> running low — ${stock} units left</div>`);
-  });
-  data.rawMaterials.forEach(m=>{
-    if(m.qty<=m.threshold) alerts.push(`<div class="alert alert-orange">⚠️ <strong>${m.name}</strong> low — ${m.qty} ${m.unit} remaining. Restock soon.</div>`);
-  });
-  if(!data.settings.ethanolRate&&data.products.length) alerts.push(`<div class="alert alert-orange">💡 Set raw material rates in <strong>Settings</strong> to enable profit tracking.</div>`);
+  cache.products.forEach(p=>{const s=getStock(p.id);if(s===0)alerts.push(`<div class="alert alert-red">🚨 <strong>${p.name}</strong> OUT OF STOCK</div>`);else if(s<=p.threshold)alerts.push(`<div class="alert alert-orange">⚠️ <strong>${p.name}</strong> low — ${s} left</div>`);});
+  cache.rawMaterials.forEach(m=>{if(m.qty<=m.threshold)alerts.push(`<div class="alert alert-orange">⚠️ <strong>${m.name}</strong> low — ${m.qty} ${m.unit}</div>`);});
   document.getElementById('alerts-container').innerHTML=alerts.join('');
 }
 
-function renderRevenueChart() {
+function renderRevenueChart(){
   const el=document.getElementById('revenue-chart');
-  const months=[];
-  const n=new Date();
+  const months=[];const n=new Date();
   for(let i=5;i>=0;i--){const d=new Date(n.getFullYear(),n.getMonth()-i,1);months.push({label:d.toLocaleString('en',{month:'short'}),month:d.getMonth(),year:d.getFullYear()});}
-  const vals=months.map(m=>data.sales.filter(s=>{const d=new Date(s.ts);return d.getMonth()===m.month&&d.getFullYear()===m.year;}).reduce((a,s)=>a+s.total,0));
+  const vals=months.map(m=>cache.sales.filter(s=>{const d=new Date(s.created_at);return d.getMonth()===m.month&&d.getFullYear()===m.year;}).reduce((a,s)=>a+s.total,0));
   const max=Math.max(...vals,1);
-  el.innerHTML=months.map((m,i)=>`<div class="chart-bar-wrap">
-    <div class="chart-val">${vals[i]?Math.round(vals[i]/1000)+'k':''}</div>
-    <div class="chart-bar ${vals[i]>0?'fill':''}" style="height:${(vals[i]/max)*130}px"></div>
-    <div class="chart-label">${m.label}</div>
-  </div>`).join('');
+  el.innerHTML=months.map((m,i)=>`<div class="chart-bar-wrap"><div class="chart-val">${vals[i]?Math.round(vals[i]/1000)+'k':''}</div><div class="chart-bar ${vals[i]>0?'fill':''}" style="height:${(vals[i]/max)*130}px"></div><div class="chart-label">${m.label}</div></div>`).join('');
 }
 
-function renderBestSellers() {
+function renderBestSellers(){
   const el=document.getElementById('best-sellers-list');
-  if(!data.products.length){el.innerHTML=`<div class="empty"><p>No products yet.</p></div>`;return;}
-  const ranked=data.products.map(p=>{
-    const sold=data.sales.filter(s=>s.productId===p.id).reduce((a,s)=>a+s.qty,0);
-    const rev=data.sales.filter(s=>s.productId===p.id).reduce((a,s)=>a+s.total,0);
-    return{...p,sold,rev};
-  }).sort((a,b)=>b.sold-a.sold).slice(0,5);
-  el.innerHTML=ranked.map((p,i)=>`<div class="rank-item">
-    <div class="rank-num">${i+1}</div>
-    <div><div class="rank-name">${p.name}</div><div style="font-size:11px;color:var(--text3)">${p.skuCode}</div></div>
-    <div style="text-align:right"><div class="rank-val">${p.sold} units</div><div style="font-size:11px;color:var(--text3)">${fmtPKR(p.rev)}</div></div>
-  </div>`).join('');
+  if(!cache.products.length){el.innerHTML=`<div class="empty"><p>No products.</p></div>`;return;}
+  const ranked=cache.products.map(p=>{const sold=cache.sales.filter(s=>s.product_id===p.id).reduce((a,s)=>a+s.qty,0);const rev=cache.sales.filter(s=>s.product_id===p.id).reduce((a,s)=>a+s.total,0);return{...p,sold,rev};}).sort((a,b)=>b.sold-a.sold).slice(0,5);
+  el.innerHTML=ranked.map((p,i)=>`<div class="rank-item"><div style="font-size:13px;font-weight:700;color:var(--text3);width:20px">${i+1}</div><div style="flex:1"><div style="font-weight:500">${p.name}</div><div style="font-size:11px;color:var(--text3)">${p.sku_code}</div></div><div style="text-align:right"><div class="mono" style="color:var(--accent)">${p.sold} units</div><div style="font-size:11px;color:var(--text3)">${fmtPKR(p.rev)}</div></div></div>`).join('');
 }
 
-function renderStockOverview() {
+function renderStockOverview(){
   const el=document.getElementById('stock-overview-list');
-  if(!data.products.length){el.innerHTML=`<div class="empty"><p>No SKUs yet.</p></div>`;return;}
-  el.innerHTML=data.products.map(p=>{
-    const stock=getProductStock(p.id);
-    const low=stock<=p.threshold;
-    const cls=stock===0?'badge-red':low?'badge-orange':'badge-green';
-    return `<div class="flex-between" style="padding:9px 0;border-bottom:1px solid var(--border)">
-      <div><div style="font-size:14px;font-weight:500">${p.name}</div><div style="font-size:11px;color:var(--text3)">${p.skuCode}</div></div>
-      <div style="text-align:right"><div style="font-weight:700;font-family:'DM Mono',monospace">${stock}</div><span class="badge ${cls}">${stock===0?'OUT':low?'LOW':'OK'}</span></div>
-    </div>`;
-  }).join('');
+  if(!cache.products.length){el.innerHTML=`<div class="empty"><p>No SKUs.</p></div>`;return;}
+  el.innerHTML=cache.products.map(p=>{const stock=getStock(p.id);const low=stock<=p.threshold;const cls=stock===0?'badge-red':low?'badge-orange':'badge-green';return`<div class="flex-between" style="padding:9px 0;border-bottom:1px solid var(--border)"><div><div style="font-size:14px;font-weight:500">${p.name}</div><div style="font-size:11px;color:var(--text3)">${p.sku_code}</div></div><div style="text-align:right"><div class="mono" style="font-weight:700">${stock}</div><span class="badge ${cls}">${stock===0?'OUT':low?'LOW':'OK'}</span></div></div>`;}).join('');
 }
 
 // ─── ANALYTICS ───────────────────────────────────────────────────────────────
-function renderAnalytics() {
-  const nowD=new Date();
-  const months=[];
-  for(let i=11;i>=0;i--){
-    const d=new Date(nowD.getFullYear(),nowD.getMonth()-i,1);
-    const sales=data.sales.filter(s=>{const sd=new Date(s.ts);return sd.getMonth()===d.getMonth()&&sd.getFullYear()===d.getFullYear();});
-    months.push({label:d.toLocaleString('en',{month:'short',year:'2-digit'}),rev:sales.reduce((a,s)=>a+s.total,0),units:sales.reduce((a,s)=>a+s.qty,0)});
-  }
-  document.getElementById('analytics-monthly').innerHTML=`<div class="table-wrap"><table>
-    <thead><tr><th>Month</th><th>Revenue</th><th>Units</th></tr></thead>
-    <tbody>${months.filter(m=>m.rev>0).map(m=>`<tr><td>${m.label}</td><td class="mono" style="color:var(--accent)">${fmtPKR(m.rev)}</td><td>${m.units}</td></tr>`).join('')||'<tr><td colspan="3" style="text-align:center;color:var(--text3)">No sales yet</td></tr>'}
-    </tbody></table></div>`;
-
-  const skuPerf=data.products.map(p=>{
-    const sales=data.sales.filter(s=>s.productId===p.id);
-    const rev=sales.reduce((a,s)=>a+s.total,0);
-    const unitsSold=sales.reduce((a,s)=>a+s.qty,0);
-    const cost=calcCostPrice(p);
-    const profit=cost?rev-(cost*unitsSold):null;
-    return{name:p.name,skuCode:p.skuCode,rev,unitsSold,profit};
-  }).sort((a,b)=>b.rev-a.rev);
-  document.getElementById('analytics-sku').innerHTML=`<div class="table-wrap"><table>
-    <thead><tr><th>Product</th><th>Units</th><th>Revenue</th><th>Profit</th></tr></thead>
-    <tbody>${skuPerf.map(p=>`<tr>
-      <td><div class="name">${p.name}</div><div style="font-size:11px;color:var(--text3)">${p.skuCode}</div></td>
-      <td>${p.unitsSold}</td>
-      <td class="mono" style="color:var(--accent)">${fmtPKR(p.rev)}</td>
-      <td class="mono" style="color:var(--green)">${p.profit!==null?fmtPKR(p.profit):'—'}</td>
-    </tr>`).join('')||'<tr><td colspan="4" style="text-align:center;color:var(--text3)">No data</td></tr>'}
-    </tbody></table></div>`;
-
-  const totalRev=data.sales.reduce((a,s)=>a+s.total,0);
-  let totalCOGS=0;
-  data.sales.forEach(s=>{const p=data.products.find(x=>x.id===s.productId);if(p){const c=calcCostPrice(p);totalCOGS+=c*s.qty;}});
-  const profit=totalRev-totalCOGS;
-  const margin=totalRev?((profit/totalRev)*100).toFixed(1):0;
-  document.getElementById('analytics-profit').innerHTML=`
-    <div class="stat-grid">
-      <div class="stat-card"><div class="stat-label">Total Revenue</div><div class="stat-value gold">${fmtPKR(totalRev)}</div></div>
-      <div class="stat-card"><div class="stat-label">Total COGS</div><div class="stat-value">${totalCOGS?fmtPKR(totalCOGS):'—'}</div></div>
-      <div class="stat-card"><div class="stat-label">Gross Profit</div><div class="stat-value green">${totalCOGS?fmtPKR(profit):'—'}</div></div>
-      <div class="stat-card"><div class="stat-label">Margin</div><div class="stat-value gold">${totalCOGS?margin+'%':'—'}</div></div>
-    </div>`;
-}
-
-// ─── SETTINGS ────────────────────────────────────────────────────────────────
-function renderSettings() {
-  // Ethanol rate
-  document.getElementById('rate-ethanol').value=data.settings.ethanolRate||'';
-
-  // Oil rates per fragrance
-  document.getElementById('oil-rates-container').innerHTML=FRAGRANCES.map(f=>`
-    <div class="settings-row">
-      <div><div class="settings-label">${f} Oil</div><div class="settings-sub">PKR per ml</div></div>
-      <input class="settings-input" type="number" id="rate-oil-${f.replace(/\s/g,'-')}" value="${data.settings.oilRates[f]||''}" placeholder="0.00" step="0.01"/>
-    </div>`).join('');
-
-  // SKU prices
-  document.getElementById('sku-price-settings').innerHTML=data.products.map(p=>`
-    <div class="settings-row">
-      <div><div class="settings-label">${p.name}</div><div class="settings-sub">${p.skuCode}</div></div>
-      <input class="settings-input" type="number" id="price-${p.id}" value="${p.price||''}" placeholder="PKR"/>
-    </div>`).join('');
-
-  // SKU thresholds
-  document.getElementById('sku-threshold-settings').innerHTML=data.products.map(p=>`
-    <div class="settings-row">
-      <div><div class="settings-label">${p.name}</div><div class="settings-sub">Alert when stock ≤ this</div></div>
-      <input class="settings-input" type="number" id="thresh-${p.id}" value="${p.threshold||5}"/>
-    </div>`).join('');
-}
-
-function saveRates() {
-  data.settings.ethanolRate=Number(document.getElementById('rate-ethanol').value)||0;
-  FRAGRANCES.forEach(f=>{
-    const el=document.getElementById('rate-oil-'+f.replace(/\s/g,'-'));
-    if(el) data.settings.oilRates[f]=Number(el.value)||0;
-  });
-  addLog('⚙️','Updated raw material rates');
-  save(); toast('Rates saved!'); renderDashboard();
-}
-
-function saveSKUPrices() {
-  data.products.forEach(p=>{
-    const el=document.getElementById('price-'+p.id);
-    if(el) p.price=Number(el.value)||0;
-  });
-  addLog('⚙️','Updated SKU selling prices');
-  save(); toast('Prices saved!');
-}
-
-function saveThresholds() {
-  data.products.forEach(p=>{
-    const el=document.getElementById('thresh-'+p.id);
-    if(el) p.threshold=Number(el.value)||5;
-  });
-  addLog('⚙️','Updated low stock thresholds');
-  save(); toast('Thresholds saved!');
+function renderAnalytics(){
+  const nowD=new Date();const months=[];
+  for(let i=11;i>=0;i--){const d=new Date(nowD.getFullYear(),nowD.getMonth()-i,1);const sales=cache.sales.filter(s=>{const sd=new Date(s.created_at);return sd.getMonth()===d.getMonth()&&sd.getFullYear()===d.getFullYear();});months.push({label:d.toLocaleString('en',{month:'short',year:'2-digit'}),rev:sales.reduce((a,s)=>a+s.total,0),units:sales.reduce((a,s)=>a+s.qty,0)});}
+  document.getElementById('analytics-monthly').innerHTML=`<div class="table-wrap"><table><thead><tr><th>Month</th><th>Revenue</th><th>Units</th></tr></thead><tbody>${months.filter(m=>m.rev>0).map(m=>`<tr><td>${m.label}</td><td class="mono" style="color:var(--accent)">${fmtPKR(m.rev)}</td><td>${m.units}</td></tr>`).join('')||'<tr><td colspan="3" style="text-align:center;color:var(--text3)">No sales yet</td></tr>'}</tbody></table></div>`;
+  const skuPerf=cache.products.map(p=>{const sales=cache.sales.filter(s=>s.product_id===p.id);const rev=sales.reduce((a,s)=>a+s.total,0);const unitsSold=sales.reduce((a,s)=>a+s.qty,0);const cost=calcCost(p);const profit=cost?rev-(cost*unitsSold):null;return{name:p.name,sku_code:p.sku_code,rev,unitsSold,profit};}).sort((a,b)=>b.rev-a.rev);
+  document.getElementById('analytics-sku').innerHTML=`<div class="table-wrap"><table><thead><tr><th>Product</th><th>Units</th><th>Revenue</th><th>Profit</th></tr></thead><tbody>${skuPerf.map(p=>`<tr><td><div class="name">${p.name}</div><div style="font-size:11px;color:var(--text3)">${p.sku_code}</div></td><td>${p.unitsSold}</td><td class="mono" style="color:var(--accent)">${fmtPKR(p.rev)}</td><td class="mono" style="color:var(--green)">${p.profit!==null?fmtPKR(p.profit):'—'}</td></tr>`).join('')||'<tr><td colspan="4" style="text-align:center;color:var(--text3)">No data</td></tr>'}</tbody></table></div>`;
+  const totalRev=cache.sales.reduce((a,s)=>a+s.total,0);let totalCOGS=0;cache.sales.forEach(s=>{const p=cache.products.find(x=>x.id===s.product_id);if(p){totalCOGS+=calcCost(p)*s.qty;}});
+  const profit=totalRev-totalCOGS;const margin=totalRev?((profit/totalRev)*100).toFixed(1):0;
+  document.getElementById('analytics-profit').innerHTML=`<div class="stat-grid"><div class="stat-card"><div class="stat-label">Total Revenue</div><div class="stat-value gold">${fmtPKR(totalRev)}</div></div><div class="stat-card"><div class="stat-label">Total COGS</div><div class="stat-value">${totalCOGS?fmtPKR(totalCOGS):'—'}</div></div><div class="stat-card"><div class="stat-label">Gross Profit</div><div class="stat-value green">${totalCOGS?fmtPKR(profit):'—'}</div></div><div class="stat-card"><div class="stat-label">Margin</div><div class="stat-value gold">${totalCOGS?margin+'%':'—'}</div></div></div>`;
 }
 
 // ─── LOG ─────────────────────────────────────────────────────────────────────
-function renderFullLog() {
+function renderFullLog(){
   const el=document.getElementById('full-log');
-  if(!data.logs.length){el.innerHTML=`<div class="empty"><div class="empty-icon">📋</div><p>No activity yet.</p></div>`;return;}
-  el.innerHTML=data.logs.map(l=>`<div class="log-item"><div class="log-icon">${l.icon}</div><div><div class="log-text">${l.text}</div><div class="log-time">${fmtDateTime(l.ts)}</div></div></div>`).join('');
+  if(!cache.logs.length){el.innerHTML=`<div class="empty"><div class="empty-icon">📋</div><p>No activity.</p></div>`;return;}
+  el.innerHTML=cache.logs.map(l=>`<div class="log-item"><div class="log-icon">${l.icon}</div><div><div class="log-text">${l.text}</div><div class="log-time">${fmtDT(l.created_at)}${l.created_by?' · '+l.created_by:''}</div></div></div>`).join('');
 }
 
-// ─── EXPORT / IMPORT ─────────────────────────────────────────────────────────
-function exportData() {
-  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url; a.download=`ZIAU-backup-${new Date().toISOString().slice(0,10)}.json`;
-  a.click(); URL.revokeObjectURL(url); toast('Backup downloaded!');
+// ─── ADMIN ───────────────────────────────────────────────────────────────────
+async function renderAdmin(){
+  // Users
+  const{data:users}=await sb.from('users').select('*').order('created_at');
+  const el=document.getElementById('users-list');
+  el.innerHTML=users?users.map(u=>`<div class="flex-between" style="padding:10px 0;border-bottom:1px solid var(--border)">
+    <div><div style="font-weight:600">${u.username}</div><div style="font-size:12px;color:var(--text3)">${u.role} · joined ${fmtDate(u.created_at)}</div></div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span class="badge ${u.role==='admin'?'badge-gold':'badge-green'}">${u.role}</span>
+      ${u.username!==currentUser?`<button onclick="deleteUser('${u.id}','${u.username}')" class="btn btn-danger btn-sm">Remove</button>`:'<span style="font-size:12px;color:var(--text3)">You</span>'}
+    </div>
+  </div>`).join(''):'';
+
+  // Rates
+  document.getElementById('rate-ethanol').value=cache.settings.ethanolRate||'';
+  document.getElementById('oil-rates-container').innerHTML=FRAGRANCES.map(f=>`<div class="settings-row"><div><div class="settings-label">${f} Oil</div><div class="settings-sub">PKR per ml</div></div><input class="settings-input" type="number" id="rate-oil-${f.replace(/\s/g,'-')}" value="${cache.settings.oilRates[f]||''}" step="0.01"/></div>`).join('');
+
+  // SKU prices
+  document.getElementById('sku-price-settings').innerHTML=cache.products.map(p=>`<div class="settings-row"><div><div class="settings-label">${p.name}</div><div class="settings-sub">${p.sku_code}</div></div><input class="settings-input" type="number" id="price-${p.id}" value="${p.price||''}"/></div>`).join('');
+
+  // Thresholds
+  document.getElementById('sku-threshold-settings').innerHTML=cache.products.map(p=>`<div class="settings-row"><div><div class="settings-label">${p.name}</div><div class="settings-sub">Alert at ≤ this</div></div><input class="settings-input" type="number" id="thresh-${p.id}" value="${p.threshold||5}"/></div>`).join('');
 }
 
-function importData() {
-  const file=document.getElementById('import-file').files[0];
-  if(!file) return toast('Select a file first','error');
-  const reader=new FileReader();
-  reader.onload=e=>{
-    try{
-      const imported=JSON.parse(e.target.result);
-      if(!imported.products||!imported.sales) return toast('Invalid backup file','error');
-      data=imported;
-      if(!data.settings) data.settings={ethanolRate:1,oilRates:{}};
-      save(); closeModal('modal-import'); toast('Data restored!');
-      renderPage(currentPage);
-    }catch(err){toast('Failed to parse file','error');}
-  };
-  reader.readAsText(file);
+async function addUser(){
+  const username=document.getElementById('new-username').value.trim();
+  const password=document.getElementById('new-password').value.trim();
+  const role=document.getElementById('new-role').value;
+  if(!username||!password)return toast('Username and password required','error');
+  const{error}=await sb.from('users').insert({username,password,role});
+  if(error)return toast('Username already exists','error');
+  await addLog('👤',`<strong>${currentUser}</strong> added user: ${username} (${role})`);
+  toast('User added!');closeModal('modal-adduser');renderAdmin();
 }
 
-function clearAllData() {
-  if(!confirm('This will erase ALL data permanently. Are you sure?')) return;
-  if(!confirm('Last warning — this cannot be undone.')) return;
-  localStorage.removeItem('ziau_v1');
-  location.reload();
+async function deleteUser(id,username){
+  if(!confirm(`Remove user "${username}"?`))return;
+  await sb.from('users').delete().eq('id',id);
+  await addLog('🗑',`<strong>${currentUser}</strong> removed user: ${username}`);
+  toast('User removed');renderAdmin();
 }
 
+async function saveRates(){
+  const ethanolRate=Number(document.getElementById('rate-ethanol').value)||0;
+  const oilRates={};
+  FRAGRANCES.forEach(f=>{const el=document.getElementById('rate-oil-'+f.replace(/\s/g,'-'));if(el)oilRates[f]=Number(el.value)||0;});
+  await sb.from('settings').update({ethanol_rate:ethanolRate,oil_rates:oilRates}).eq('id',1);
+  await addLog('⚙️',`<strong>${currentUser}</strong> updated raw material rates`);
+  cache.settings.ethanolRate=ethanolRate;cache.settings.oilRates=oilRates;
+  toast('Rates saved!');
+}
 
-// ─── INSTALL / ADD TO HOME SCREEN ────────────────────────────────────────────
-let deferredPrompt = null;
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  document.getElementById('installBtn').style.display = 'block';
-});
-
-function installApp() {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((result) => {
-      deferredPrompt = null;
-      document.getElementById('installBtn').style.display = 'none';
-      if (result.outcome === 'accepted') toast('ZIAU added to home screen!');
-    });
-  } else {
-    // Fallback manual instructions for Samsung
-    alert('To add to home screen:\n\n1. Tap the 3-dot menu ⋮ in Chrome\n2. Scroll down and tap "Add to Home Screen"\n3. Tap "Add"\n\nIf you don\'t see it, try opening this file via a Netlify/GitHub link instead of locally.');
+async function saveSKUPrices(){
+  for(const p of cache.products){
+    const el=document.getElementById('price-'+p.id);
+    if(el)await sb.from('products').update({price:Number(el.value)||0}).eq('id',p.id);
   }
+  await addLog('⚙️',`<strong>${currentUser}</strong> updated SKU prices`);
+  await loadAllData();toast('Prices saved!');
 }
 
-window.addEventListener('appinstalled', () => {
-  toast('ZIAU installed successfully!');
-  document.getElementById('installBtn').style.display = 'none';
-});
-
-// ─── INIT ────────────────────────────────────────────────────────────────────
-load();
-renderDashboard();
+async function saveThresholds(){
+  for(const p of cache.products){
+    const el=document.getElementById('thresh-'+p.id);
+    if(el)await sb.from('products').update({threshold:Number(el.value)||5}).eq('id',p.id);
+  }
+  await addLog('⚙️',`<strong>${currentUser}</strong> updated stock thresholds`);
+  await loadAllData();toast('Thresholds saved!');
+}
 </script>
 </body>
 </html>
