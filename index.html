@@ -11,13 +11,11 @@
   .light{--bg:#f5f4f0;--bg2:#fff;--bg3:#ece9e0;--border:#ddd9ce;--accent:#b8902a;--red:#c94040;--red-dim:rgba(201,64,64,0.1);--green:#2d8a50;--green-dim:rgba(45,138,80,0.1);--orange:#c4622a;--orange-dim:rgba(196,98,42,0.1);--text:#1a1a2e;--text2:#5a5a7a;--text3:#9a9ab0;}
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;transition:background 0.3s,color 0.3s;}
-  /* LOGIN */
   #login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;}
   .login-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:32px 24px;width:100%;max-width:380px;}
   .login-logo{font-size:32px;font-weight:700;letter-spacing:0.12em;color:var(--accent);text-align:center;margin-bottom:4px;}
   .login-sub{text-align:center;font-size:12px;color:var(--text3);letter-spacing:0.08em;margin-bottom:28px;}
   .login-error{background:var(--red-dim);border:1px solid var(--red);color:var(--red);padding:10px 14px;border-radius:var(--radius-sm);font-size:13px;margin-bottom:14px;display:none;}
-  /* APP */
   #app-screen{display:none;flex-direction:column;min-height:100vh;}
   .topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;}
   .topbar-logo{font-size:20px;font-weight:700;letter-spacing:0.12em;color:var(--accent);}
@@ -25,12 +23,11 @@
   .topbar-right{display:flex;gap:8px;align-items:center;}
   .user-badge{background:var(--accent-dim);border:1px solid var(--accent);color:var(--accent);padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;}
   .icon-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:7px 10px;border-radius:var(--radius-sm);cursor:pointer;font-size:14px;}
-  .content{flex:1;padding:16px;max-width:900px;margin:0 auto;width:100%;}
-  .bottom-nav{display:flex;background:var(--bg2);border-top:1px solid var(--border);position:sticky;bottom:0;z-index:100;}
-  .nav-btn{flex:1;padding:10px 4px 12px;background:none;border:none;cursor:pointer;color:var(--text3);display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-family:'DM Sans',sans-serif;transition:color 0.2s;}
+  .content{flex:1;padding:16px;max-width:900px;margin:0 auto;width:100%;padding-bottom:90px;}
+  .bottom-nav{display:flex;background:var(--bg2);border-top:1px solid var(--border);position:fixed;bottom:0;left:0;right:0;z-index:100;overflow-x:auto;}
+  .nav-btn{flex:1;min-width:55px;padding:10px 4px 12px;background:none;border:none;cursor:pointer;color:var(--text3);display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-family:'DM Sans',sans-serif;transition:color 0.2s;white-space:nowrap;}
   .nav-btn .ni{font-size:20px;}
   .nav-btn.active{color:var(--accent);}
-  /* CARDS */
   .card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px;}
   .card-title{font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:10px;}
   .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
@@ -44,7 +41,6 @@
   .tab-row::-webkit-scrollbar{display:none;}
   .tab-btn{padding:7px 14px;border-radius:20px;border:1px solid var(--border);background:var(--bg2);color:var(--text2);cursor:pointer;font-size:13px;white-space:nowrap;font-family:'DM Sans',sans-serif;}
   .tab-btn.active{background:var(--accent);border-color:var(--accent);color:#000;font-weight:600;}
-  /* FORMS */
   .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
   .form-group{display:flex;flex-direction:column;gap:5px;}
   .form-group.span2{grid-column:1/-1;}
@@ -58,24 +54,20 @@
   .btn-ghost{background:var(--bg3);color:var(--text2);border:1px solid var(--border);}
   .btn-full{width:100%;}
   .btn-sm{padding:6px 12px;font-size:12px;}
-  /* TABLE */
   .table-wrap{overflow-x:auto;}
   table{width:100%;border-collapse:collapse;font-size:13px;}
   th{text-align:left;padding:9px 10px;color:var(--text3);font-weight:600;font-size:11px;text-transform:uppercase;border-bottom:1px solid var(--border);}
   td{padding:10px;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:middle;}
   tr:last-child td{border-bottom:none;}
   .name{color:var(--text);font-weight:500;}
-  /* BADGES */
   .badge{display:inline-block;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600;}
   .badge-red{background:var(--red-dim);color:var(--red);}
   .badge-green{background:var(--green-dim);color:var(--green);}
   .badge-orange{background:var(--orange-dim);color:var(--orange);}
   .badge-gold{background:var(--accent-dim);color:var(--accent);}
-  /* ALERTS */
   .alert{padding:12px 14px;border-radius:var(--radius-sm);margin-bottom:10px;font-size:13px;display:flex;gap:8px;}
   .alert-red{background:var(--red-dim);border:1px solid var(--red);color:var(--red);}
   .alert-orange{background:var(--orange-dim);border:1px solid var(--orange);color:var(--orange);}
-  /* MODAL */
   .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;display:flex;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);}
   .modal-bg.hidden{display:none;}
   .modal{background:var(--bg2);border-radius:var(--radius) var(--radius) 0 0;padding:20px;width:100%;max-width:600px;border-top:1px solid var(--border);max-height:90vh;overflow-y:auto;animation:slideUp 0.25s ease;}
@@ -83,8 +75,6 @@
   .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
   .modal-title{font-size:17px;font-weight:700;}
   .close-btn{background:var(--bg3);border:none;color:var(--text2);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;}
-  /* MISC */
-  .section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
   .section-title{font-size:18px;font-weight:700;}
   .flex-between{display:flex;justify-content:space-between;align-items:center;}
   .mt{margin-top:14px;}
@@ -108,19 +98,11 @@
   .settings-label{font-size:14px;font-weight:500;}
   .settings-sub{font-size:12px;color:var(--text3);margin-top:2px;}
   .settings-input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:7px 10px;border-radius:var(--radius-sm);font-family:'DM Mono',monospace;font-size:13px;width:110px;text-align:right;}
-  .chart-container{height:160px;display:flex;align-items:flex-end;gap:6px;padding-top:10px;}
-  .chart-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end;}
-  .chart-bar{width:100%;background:var(--accent-dim);border-radius:4px 4px 0 0;min-height:4px;}
-  .chart-bar.fill{background:var(--accent);}
-  .chart-label{font-size:10px;color:var(--text3);}
-  .chart-val{font-size:9px;color:var(--accent);font-family:'DM Mono',monospace;}
-  .rank-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);}
-  .rank-item:last-child{border-bottom:none;}
+  .cost-row{display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid var(--border);}
+  .cost-row:last-child{border-bottom:none;}
+  .cost-total{display:flex;justify-content:space-between;padding:10px 0 0;font-size:15px;font-weight:700;margin-top:6px;border-top:2px solid var(--border);}
   .page{display:none;}
   .page.active{display:block;}
-  /* ADMIN ONLY */
-  .admin-only{display:none;}
-  .is-admin .admin-only{display:flex;}
   ::-webkit-scrollbar{width:4px;height:4px;}
   ::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
   @media(max-width:480px){.stat-value{font-size:17px;}.form-grid{grid-template-columns:1fr;}.form-group.span2{grid-column:1;}}
@@ -128,31 +110,20 @@
 </head>
 <body>
 
-<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-box">
     <div class="login-logo">ZIAU</div>
     <div class="login-sub">BUSINESS MANAGER</div>
     <div class="login-error" id="login-error">Invalid username or password</div>
-    <div class="form-group" style="margin-bottom:12px">
-      <label>Username</label>
-      <input type="text" id="login-user" placeholder="Enter username"/>
-    </div>
-    <div class="form-group" style="margin-bottom:18px">
-      <label>Password</label>
-      <input type="password" id="login-pass" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()"/>
-    </div>
+    <div class="form-group" style="margin-bottom:12px"><label>Username</label><input type="text" id="login-user" placeholder="Enter username"/></div>
+    <div class="form-group" style="margin-bottom:18px"><label>Password</label><input type="password" id="login-pass" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()"/></div>
     <button class="btn btn-primary btn-full" onclick="doLogin()">Login</button>
   </div>
 </div>
 
-<!-- APP -->
 <div id="app-screen">
   <div class="topbar">
-    <div>
-      <div class="topbar-logo">ZIAU</div>
-      <div class="topbar-sub">BUSINESS MANAGER</div>
-    </div>
+    <div><div class="topbar-logo">ZIAU</div><div class="topbar-sub">BUSINESS MANAGER</div></div>
     <div class="topbar-right">
       <span class="user-badge" id="user-badge">—</span>
       <button class="icon-btn" id="themeBtn" onclick="toggleTheme()">🌙</button>
@@ -161,6 +132,7 @@
   </div>
 
   <div class="content">
+
     <!-- DASHBOARD -->
     <div class="page active" id="page-dashboard">
       <div id="alerts-container"></div>
@@ -170,7 +142,7 @@
         <div class="stat-card"><div class="stat-label">Total Revenue</div><div class="stat-value" id="stat-total-rev">PKR 0</div><div class="stat-sub" id="stat-total-s">0 sales</div></div>
         <div class="stat-card"><div class="stat-label">Total Profit</div><div class="stat-value green" id="stat-profit">—</div><div class="stat-sub" id="stat-margin"></div></div>
       </div>
-      <div class="card"><div class="card-title">Monthly Revenue</div><div class="chart-container" id="revenue-chart"></div></div>
+      <div class="card"><div class="card-title">Monthly Revenue</div><div style="height:160px;display:flex;align-items:flex-end;gap:6px;padding-top:10px" id="revenue-chart"></div></div>
       <div class="card"><div class="card-title">🏆 Best Selling SKUs</div><div id="best-sellers-list"></div></div>
       <div class="card"><div class="card-title">Stock Overview</div><div id="stock-overview-list"></div></div>
       <div class="card"><div class="card-title">Recent Activity</div><div id="recent-log"></div></div>
@@ -178,7 +150,7 @@
 
     <!-- SALES -->
     <div class="page" id="page-sales">
-      <div class="section-header">
+      <div class="flex-between mb" style="margin-bottom:14px">
         <div class="section-title">Sales</div>
         <button class="btn btn-primary btn-sm" onclick="openModal('modal-sale')">+ Add Sale</button>
       </div>
@@ -206,11 +178,8 @@
       </div>
       <div id="inv-finished">
         <div class="flex-between mb">
-          <div style="font-size:13px;color:var(--text2)">All SKUs</div>
-          <div style="display:flex;gap:8px">
-            <button class="btn btn-ghost btn-sm" onclick="openModal('modal-restock')">+ Restock</button>
-            <button class="btn btn-primary btn-sm admin-only" onclick="openModal('modal-product')">+ SKU</button>
-          </div>
+          <div style="font-size:13px;color:var(--text2)">All SKUs & stock</div>
+          <button class="btn btn-ghost btn-sm" onclick="openModal('modal-restock')">+ Restock</button>
         </div>
         <div id="sku-list"></div>
       </div>
@@ -230,11 +199,30 @@
       </div>
     </div>
 
+    <!-- COSTS -->
+    <div class="page" id="page-costs">
+      <div class="section-title mb">Cost Calculator</div>
+      <div class="card" style="background:var(--accent-dim);border-color:var(--accent);margin-bottom:14px">
+        <div style="font-size:13px;color:var(--text2)">Cost = (Oil ml × Oil rate/ml) + (Ethanol ml × Ethanol rate/ml) + Packaging items. Edit all values in Admin.</div>
+      </div>
+      <div id="cost-breakdown"></div>
+    </div>
+
     <!-- ANALYTICS -->
     <div class="page" id="page-analytics">
       <div class="section-title mb">Analytics</div>
-      <div class="card"><div class="card-title">Revenue by Month</div><div id="analytics-monthly"></div></div>
-      <div class="card"><div class="card-title">SKU Performance</div><div id="analytics-sku"></div></div>
+      <div class="card">
+        <div class="flex-between" style="margin-bottom:12px">
+          <div class="card-title" style="margin:0">Revenue by Month</div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="btn btn-ghost btn-sm" onclick="changeYear(-1)">◀</button>
+            <span id="analytics-year" style="font-weight:700;font-family:'DM Mono',monospace;font-size:14px"></span>
+            <button class="btn btn-ghost btn-sm" onclick="changeYear(1)">▶</button>
+          </div>
+        </div>
+        <div id="analytics-monthly"></div>
+      </div>
+      <div class="card"><div class="card-title">SKU Performance (All Time)</div><div id="analytics-sku"></div></div>
       <div class="card"><div class="card-title">Profit Summary</div><div id="analytics-profit"></div></div>
     </div>
 
@@ -248,7 +236,7 @@
     <div class="page" id="page-admin">
       <div class="section-title mb">Admin Panel</div>
 
-      <!-- Manage Users -->
+      <!-- TEAM -->
       <div class="card">
         <div class="flex-between" style="margin-bottom:12px">
           <div class="card-title" style="margin:0">Team Members</div>
@@ -257,38 +245,67 @@
         <div id="users-list"></div>
       </div>
 
-      <!-- Settings -->
+      <!-- SKU MANAGER -->
       <div class="card">
-        <div class="card-title">Raw Material Rates</div>
-        <div class="settings-row">
-          <div><div class="settings-label">Ethanol Rate</div><div class="settings-sub">PKR per ml</div></div>
-          <input class="settings-input" type="number" id="rate-ethanol" step="0.01"/>
+        <div class="flex-between" style="margin-bottom:12px">
+          <div class="card-title" style="margin:0">SKU Manager</div>
+          <button class="btn btn-primary btn-sm" onclick="openModal('modal-add-sku')">+ Add SKU</button>
         </div>
-        <div id="oil-rates-container"></div>
-        <div class="mt"><button class="btn btn-primary btn-sm" onclick="saveRates()">Save Rates</button></div>
+        <div id="admin-sku-list"></div>
       </div>
 
+      <!-- FRAGRANCE OIL RATES -->
+      <div class="card">
+        <div class="card-title">Fragrance Oil Rates (PKR per ml)</div>
+        <div style="font-size:12px;color:var(--text3);margin-bottom:10px">Set how much each fragrance oil costs per ml. This applies to all SKUs using that fragrance.</div>
+        <div id="oil-rates-container"></div>
+        <div class="mt"><button class="btn btn-primary btn-sm" onclick="saveOilRates()">Save Oil Rates</button></div>
+      </div>
+
+      <!-- ETHANOL RATE -->
+      <div class="card">
+        <div class="card-title">Ethanol Rate</div>
+        <div class="settings-row">
+          <div><div class="settings-label">Ethanol (99%)</div><div class="settings-sub">PKR per ml — applies to all SKUs</div></div>
+          <input class="settings-input" type="number" id="rate-ethanol" step="0.01"/>
+        </div>
+        <div class="mt"><button class="btn btn-primary btn-sm" onclick="saveEthanolRate()">Save Ethanol Rate</button></div>
+      </div>
+
+      <!-- RAW MATERIAL MANAGER -->
+      <div class="card">
+        <div class="flex-between" style="margin-bottom:12px">
+          <div class="card-title" style="margin:0">Raw Material Stock</div>
+          <button class="btn btn-primary btn-sm" onclick="openModal('modal-rawmat')">+ Add / Update</button>
+        </div>
+        <div id="admin-raw-list"></div>
+      </div>
+
+      <!-- SELLING PRICES -->
       <div class="card">
         <div class="card-title">SKU Selling Prices</div>
         <div id="sku-price-settings"></div>
         <div class="mt"><button class="btn btn-primary btn-sm" onclick="saveSKUPrices()">Save Prices</button></div>
       </div>
 
+      <!-- LOW STOCK THRESHOLDS -->
       <div class="card">
         <div class="card-title">Low Stock Thresholds</div>
         <div id="sku-threshold-settings"></div>
         <div class="mt"><button class="btn btn-primary btn-sm" onclick="saveThresholds()">Save Thresholds</button></div>
       </div>
+
     </div>
   </div>
 
-  <nav class="bottom-nav" id="bottom-nav">
+  <nav class="bottom-nav">
     <button class="nav-btn active" onclick="navigate('dashboard',this)"><span class="ni">📊</span>Home</button>
     <button class="nav-btn" onclick="navigate('sales',this)"><span class="ni">🧾</span>Sales</button>
     <button class="nav-btn" onclick="navigate('inventory',this)"><span class="ni">📦</span>Stock</button>
+    <button class="nav-btn" onclick="navigate('costs',this)"><span class="ni">💰</span>Costs</button>
     <button class="nav-btn" onclick="navigate('analytics',this)"><span class="ni">📈</span>Analytics</button>
     <button class="nav-btn" onclick="navigate('log',this)"><span class="ni">📋</span>Log</button>
-    <button class="nav-btn admin-only" id="admin-nav-btn" onclick="navigate('admin',this)"><span class="ni">🛡️</span>Admin</button>
+    <button class="nav-btn" id="admin-nav-btn" style="display:none" onclick="navigate('admin',this)"><span class="ni">🛡️</span>Admin</button>
   </nav>
 </div>
 
@@ -310,25 +327,62 @@
   </div>
 </div>
 
-<div class="modal-bg hidden" id="modal-product">
+<div class="modal-bg hidden" id="modal-add-sku">
   <div class="modal">
-    <div class="modal-header"><div class="modal-title">Add SKU</div><button class="close-btn" onclick="closeModal('modal-product')">✕</button></div>
+    <div class="modal-header"><div class="modal-title">Add New SKU</div><button class="close-btn" onclick="closeModal('modal-add-sku')">✕</button></div>
     <div class="form-grid">
-      <div class="form-group span2"><label>Product Name</label><input type="text" id="prod-name"/></div>
-      <div class="form-group"><label>SKU Code</label><input type="text" id="prod-sku"/></div>
-      <div class="form-group"><label>Type</label><select id="prod-type"><option value="50ml">50ml Bottle</option><option value="10ml">10ml Pocket</option><option value="giftbox">Gift Box</option><option value="other">Other</option></select></div>
-      <div class="form-group"><label>Selling Price (PKR)</label><input type="number" id="prod-price"/></div>
-      <div class="form-group"><label>Initial Stock</label><input type="number" id="prod-stock" value="0"/></div>
-      <div class="form-group"><label>Low Stock Alert At</label><input type="number" id="prod-threshold" value="5"/></div>
-      <div class="form-group span2"><label>Fragrance</label><select id="prod-fragrance"><option value="">— None —</option><option>Desert Tonka</option><option>Signature</option><option>Desire</option><option>Najm</option><option>Sovereign</option><option>Bloom</option></select></div>
+      <div class="form-group span2"><label>Product Name</label><input type="text" id="new-sku-name" placeholder="e.g. Sovereign 50ml"/></div>
+      <div class="form-group"><label>SKU Code</label><input type="text" id="new-sku-code" placeholder="e.g. SOV-50"/></div>
+      <div class="form-group"><label>Size Type</label>
+        <select id="new-sku-type"><option value="50ml">50ml</option><option value="10ml">10ml</option><option value="giftbox">Gift Box</option><option value="other">Other</option></select>
+      </div>
+      <div class="form-group span2"><label>Fragrance</label>
+        <select id="new-sku-fragrance"><option value="">— None —</option></select>
+      </div>
+      <div class="form-group"><label>Selling Price (PKR)</label><input type="number" id="new-sku-price" value="0"/></div>
+      <div class="form-group"><label>Initial Stock</label><input type="number" id="new-sku-stock" value="0"/></div>
+      <div class="form-group"><label>Oil Used (ml per bottle)</label><input type="number" id="new-sku-oil-ml" placeholder="e.g. 17.5" step="0.1"/></div>
+      <div class="form-group"><label>Ethanol Used (ml per bottle)</label><input type="number" id="new-sku-eth-ml" placeholder="e.g. 32.5" step="0.1"/></div>
+      <div class="form-group"><label>Box Cost (PKR)</label><input type="number" id="new-sku-box" value="0"/></div>
+      <div class="form-group"><label>Sticker Cost (PKR)</label><input type="number" id="new-sku-sticker" value="0"/></div>
+      <div class="form-group"><label>Bag Cost (PKR)</label><input type="number" id="new-sku-bag" value="0"/></div>
+      <div class="form-group"><label>Other Packaging (PKR)</label><input type="number" id="new-sku-other-pkg" value="0"/></div>
+      <div class="form-group"><label>Low Stock Alert At</label><input type="number" id="new-sku-threshold" value="5"/></div>
     </div>
-    <div class="mt"><button class="btn btn-primary btn-full" onclick="addProduct()">Add Product</button></div>
+    <div class="mt"><button class="btn btn-primary btn-full" onclick="addSKU()">Add SKU</button></div>
+  </div>
+</div>
+
+<div class="modal-bg hidden" id="modal-edit-sku">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">Edit SKU</div><button class="close-btn" onclick="closeModal('modal-edit-sku')">✕</button></div>
+    <input type="hidden" id="edit-sku-id"/>
+    <div class="form-grid">
+      <div class="form-group span2"><label>Product Name</label><input type="text" id="edit-sku-name"/></div>
+      <div class="form-group"><label>SKU Code</label><input type="text" id="edit-sku-code"/></div>
+      <div class="form-group"><label>Size Type</label>
+        <select id="edit-sku-type"><option value="50ml">50ml</option><option value="10ml">10ml</option><option value="giftbox">Gift Box</option><option value="other">Other</option></select>
+      </div>
+      <div class="form-group span2"><label>Fragrance</label>
+        <select id="edit-sku-fragrance"><option value="">— None —</option></select>
+      </div>
+      <div class="form-group"><label>Selling Price (PKR)</label><input type="number" id="edit-sku-price"/></div>
+      <div class="form-group"><label>Initial Stock</label><input type="number" id="edit-sku-stock"/></div>
+      <div class="form-group"><label>Oil Used (ml per bottle)</label><input type="number" id="edit-sku-oil-ml" step="0.1"/></div>
+      <div class="form-group"><label>Ethanol Used (ml per bottle)</label><input type="number" id="edit-sku-eth-ml" step="0.1"/></div>
+      <div class="form-group"><label>Box Cost (PKR)</label><input type="number" id="edit-sku-box"/></div>
+      <div class="form-group"><label>Sticker Cost (PKR)</label><input type="number" id="edit-sku-sticker"/></div>
+      <div class="form-group"><label>Bag Cost (PKR)</label><input type="number" id="edit-sku-bag"/></div>
+      <div class="form-group"><label>Other Packaging (PKR)</label><input type="number" id="edit-sku-other-pkg"/></div>
+      <div class="form-group"><label>Low Stock Alert At</label><input type="number" id="edit-sku-threshold"/></div>
+    </div>
+    <div class="mt"><button class="btn btn-primary btn-full" onclick="saveEditSKU()">Save Changes</button></div>
   </div>
 </div>
 
 <div class="modal-bg hidden" id="modal-restock">
   <div class="modal">
-    <div class="modal-header"><div class="modal-title">Restock</div><button class="close-btn" onclick="closeModal('modal-restock')">✕</button></div>
+    <div class="modal-header"><div class="modal-title">Restock Finished Goods</div><button class="close-btn" onclick="closeModal('modal-restock')">✕</button></div>
     <div class="form-grid">
       <div class="form-group span2"><label>Product</label><select id="restock-sku"></select></div>
       <div class="form-group"><label>Quantity Added</label><input type="number" id="restock-qty" min="1" value="1"/></div>
@@ -343,10 +397,10 @@
     <div class="modal-header"><div class="modal-title">Raw Material Entry</div><button class="close-btn" onclick="closeModal('modal-rawmat')">✕</button></div>
     <div class="form-grid">
       <div class="form-group span2"><label>Type</label><select id="rm-type"><option value="oil">Fragrance Oil</option><option value="ethanol">Ethanol</option><option value="bottle">Bottles</option><option value="other">Other</option></select></div>
-      <div class="form-group span2"><label>Name</label><input type="text" id="rm-name"/></div>
+      <div class="form-group span2"><label>Name</label><input type="text" id="rm-name" placeholder="e.g. Sovereign Oil, 99% Ethanol"/></div>
       <div class="form-group"><label>Quantity</label><input type="number" id="rm-qty"/></div>
       <div class="form-group"><label>Unit</label><select id="rm-unit"><option>ml</option><option>Liters</option><option>Units</option><option>Kg</option></select></div>
-      <div class="form-group"><label>Alert below</label><input type="number" id="rm-threshold" value="50"/></div>
+      <div class="form-group"><label>Alert Below</label><input type="number" id="rm-threshold" value="50"/></div>
     </div>
     <div class="mt"><button class="btn btn-primary btn-full" onclick="addRawMaterial()">Save</button></div>
   </div>
@@ -354,7 +408,7 @@
 
 <div class="modal-bg hidden" id="modal-production">
   <div class="modal">
-    <div class="modal-header"><div class="modal-title">Log Production</div><button class="close-btn" onclick="closeModal('modal-production')">✕</button></div>
+    <div class="modal-header"><div class="modal-title">Log Production Batch</div><button class="close-btn" onclick="closeModal('modal-production')">✕</button></div>
     <div class="form-grid">
       <div class="form-group span2"><label>Product</label><select id="prod-batch-sku" onchange="updateProdCalc()"></select></div>
       <div class="form-group span2"><label>Units Produced</label><input type="number" id="prod-batch-qty" min="1" value="1" oninput="updateProdCalc()"/></div>
@@ -378,19 +432,16 @@
 </div>
 
 <script>
-const SUPABASE_URL = 'https://oktuxqfogagwrifuguep.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rdHV4cWZvZ2Fnd3JpZnVndWVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwNjgyMjUsImV4cCI6MjA5NzY0NDIyNX0.4iv_qj0sh8eyQT0BtCIbNRVAL-wUb5YY6fPwGBarxLI';
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const SUPABASE_URL='https://oktuxqfogagwrifuguep.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rdHV4cWZvZ2Fnd3JpZnVndWVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwNjgyMjUsImV4cCI6MjA5NzY0NDIyNX0.4iv_qj0sh8eyQT0BtCIbNRVAL-wUb5YY6fPwGBarxLI';
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
-const FRAGRANCES = ['Desert Tonka','Signature','Desire','Najm','Sovereign','Bloom'];
-const FORMULA = {'50ml':{oil:15,ethanol:35},'10ml':{oil:3,ethanol:7},'giftbox':{oil:18,ethanol:42},'other':{oil:0,ethanol:0}};
+const DEFAULT_FRAGRANCES=['Sovereign','Najm','One','Signature','Desert Tonka','Desire','Bloom'];
 
-let currentUser = null;
-let isAdmin = false;
-let cache = { products:[], sales:[], rawMaterials:[], production:[], logs:[], settings:{ethanolRate:1,oilRates:{}} };
-let currentPage = 'dashboard';
-let salesFilter = 'all';
-let dark = true;
+let currentUser=null,isAdmin=false;
+let cache={products:[],sales:[],restocks:[],rawMaterials:[],production:[],logs:[],settings:{ethanolRate:1,oilRates:{},fragrances:[]}};
+let currentPage='dashboard';
+let analyticsYear=new Date().getFullYear();
 
 // ─── HELPERS ─────────────────────────────────────────────────────────────────
 function fmtPKR(n){return 'PKR '+(Number(n)||0).toLocaleString('en-PK',{maximumFractionDigits:0});}
@@ -408,61 +459,60 @@ function toast(msg,type='success'){
 function getStock(pid){
   const p=cache.products.find(x=>x.id===pid);if(!p)return 0;
   const sold=cache.sales.filter(s=>s.product_id===pid).reduce((a,s)=>a+s.qty,0);
-  const restocked=cache.restocks?cache.restocks.filter(r=>r.product_id===pid).reduce((a,r)=>a+r.qty,0):0;
+  const restocked=(cache.restocks||[]).filter(r=>r.product_id===pid).reduce((a,r)=>a+r.qty,0);
   const produced=cache.production.filter(r=>r.product_id===pid).reduce((a,r)=>a+r.qty,0);
   return (p.initial_stock||0)+restocked+produced-sold;
 }
 
 function calcCost(p){
-  const f=FORMULA[p.type]||FORMULA['other'];
-  const ethCost=f.ethanol*(cache.settings.ethanolRate||0);
   const oilRate=p.fragrance?(cache.settings.oilRates[p.fragrance]||0):0;
-  return f.oil*oilRate+ethCost;
+  const oilCost=(p.oil_ml||0)*oilRate;
+  const ethCost=(p.eth_ml||0)*(cache.settings.ethanolRate||0);
+  const pkgCost=(p.box_cost||0)+(p.sticker_cost||0)+(p.bag_cost||0)+(p.other_pkg_cost||0);
+  return oilCost+ethCost+pkgCost;
 }
 
-async function addLog(icon,text){
-  await sb.from('logs').insert({icon,text,created_by:currentUser});
+function getFragrances(){
+  const fromSettings=cache.settings.fragrances||[];
+  return fromSettings.length?fromSettings:DEFAULT_FRAGRANCES;
 }
+
+async function addLog(icon,text){await sb.from('logs').insert({icon,text,created_by:currentUser});}
 
 // ─── AUTH ─────────────────────────────────────────────────────────────────────
 async function doLogin(){
   const username=document.getElementById('login-user').value.trim();
   const password=document.getElementById('login-pass').value.trim();
   if(!username||!password)return;
-  const {data,error}=await sb.from('users').select('*').eq('username',username).eq('password',password).single();
+  const{data,error}=await sb.from('users').select('*').eq('username',username).eq('password',password).single();
   if(error||!data){document.getElementById('login-error').style.display='block';return;}
-  currentUser=data.username;
-  isAdmin=data.role==='admin';
+  currentUser=data.username;isAdmin=data.role==='admin';
   document.getElementById('login-screen').style.display='none';
   document.getElementById('app-screen').style.display='flex';
   document.getElementById('user-badge').textContent=currentUser+(isAdmin?' 🛡️':'');
-  if(isAdmin){
-    document.getElementById('app-screen').classList.add('is-admin');
-    document.getElementById('admin-nav-btn').style.display='flex';
-  }
-  await loadAllData();
-  renderDashboard();
+  if(isAdmin)document.getElementById('admin-nav-btn').style.display='flex';
+  await loadAllData();renderDashboard();
 }
 
 function doLogout(){
   currentUser=null;isAdmin=false;
   document.getElementById('login-screen').style.display='flex';
   document.getElementById('app-screen').style.display='none';
-  document.getElementById('app-screen').classList.remove('is-admin');
+  document.getElementById('admin-nav-btn').style.display='none';
   document.getElementById('login-user').value='';
   document.getElementById('login-pass').value='';
   document.getElementById('login-error').style.display='none';
 }
 
-// ─── DATA LOAD ────────────────────────────────────────────────────────────────
+// ─── DATA ─────────────────────────────────────────────────────────────────────
 async function loadAllData(){
-  const [products,sales,restocks,rawMats,production,logs,settings]=await Promise.all([
+  const[products,sales,restocks,rawMats,production,logs,settings]=await Promise.all([
     sb.from('products').select('*').order('name'),
     sb.from('sales').select('*').order('created_at',{ascending:false}),
     sb.from('restocks').select('*'),
     sb.from('raw_materials').select('*'),
     sb.from('production').select('*'),
-    sb.from('logs').select('*').order('created_at',{ascending:false}).limit(200),
+    sb.from('logs').select('*').order('created_at',{ascending:false}).limit(300),
     sb.from('settings').select('*').single()
   ]);
   cache.products=products.data||[];
@@ -474,23 +524,26 @@ async function loadAllData(){
   if(settings.data){
     cache.settings.ethanolRate=settings.data.ethanol_rate||1;
     cache.settings.oilRates=settings.data.oil_rates||{};
+    cache.settings.fragrances=settings.data.oil_rates?Object.keys(settings.data.oil_rates):[];
   }
-  // Seed SKUs if none
-  if(!cache.products.length && isAdmin) await seedSKUs();
+  if(!cache.products.length&&isAdmin)await seedSKUs();
 }
 
 async function seedSKUs(){
   const rows=[];
-  FRAGRANCES.forEach(frag=>{
+  DEFAULT_FRAGRANCES.forEach(frag=>{
     const code=frag.replace(/\s+/g,'').substring(0,3).toUpperCase();
-    rows.push({name:`${frag} 50ml`,sku_code:`${code}-50`,type:'50ml',fragrance:frag,price:0,initial_stock:0,threshold:5});
-    rows.push({name:`${frag} 10ml`,sku_code:`${code}-10`,type:'10ml',fragrance:frag,price:0,initial_stock:0,threshold:10});
-    rows.push({name:`${frag} Gift Box`,sku_code:`${code}-GB`,type:'giftbox',fragrance:frag,price:0,initial_stock:0,threshold:3});
+    rows.push({name:`${frag} 50ml`,sku_code:`${code}-50`,type:'50ml',fragrance:frag,price:0,initial_stock:0,threshold:5,oil_ml:17.5,eth_ml:32.5,box_cost:0,sticker_cost:0,bag_cost:0,other_pkg_cost:0});
+    rows.push({name:`${frag} 10ml`,sku_code:`${code}-10`,type:'10ml',fragrance:frag,price:0,initial_stock:0,threshold:10,oil_ml:3.5,eth_ml:6.5,box_cost:0,sticker_cost:0,bag_cost:0,other_pkg_cost:0});
   });
+  // Also seed oil rates for all fragrances
+  const oilRates={};DEFAULT_FRAGRANCES.forEach(f=>oilRates[f]=0);
+  await sb.from('settings').update({oil_rates:oilRates}).eq('id',1);
   await sb.from('products').insert(rows);
-  const {data}=await sb.from('products').select('*').order('name');
+  const{data}=await sb.from('products').select('*').order('name');
   cache.products=data||[];
-  await addLog('🎉','ZIAU app initialized with all SKUs');
+  cache.settings.oilRates=oilRates;
+  await addLog('🎉','ZIAU initialized with all SKUs');
 }
 
 // ─── NAVIGATION ──────────────────────────────────────────────────────────────
@@ -501,16 +554,17 @@ function navigate(page,btn){
   if(btn)btn.classList.add('active');
   currentPage=page;renderPage(page);
 }
-
-function renderPage(page){
-  if(page==='dashboard')renderDashboard();
-  if(page==='sales')renderSales(salesFilter);
-  if(page==='inventory'){renderSKUList();renderRawList();renderProductionList();}
-  if(page==='analytics')renderAnalytics();
-  if(page==='log')renderFullLog();
-  if(page==='admin')renderAdmin();
+function renderPage(p){
+  if(p==='dashboard')renderDashboard();
+  if(p==='sales')renderSales('all');
+  if(p==='inventory'){renderSKUList();renderRawList();renderProductionList();}
+  if(p==='costs')renderCosts();
+  if(p==='analytics')renderAnalytics();
+  if(p==='log')renderFullLog();
+  if(p==='admin')renderAdmin();
 }
 
+let dark=true;
 function toggleTheme(){dark=!dark;document.body.classList.toggle('light',!dark);document.getElementById('themeBtn').textContent=dark?'🌙':'☀️';}
 
 // ─── MODALS ──────────────────────────────────────────────────────────────────
@@ -519,13 +573,18 @@ function closeModal(id){document.getElementById(id).classList.add('hidden');}
 document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.add('hidden');}));
 
 function populateDropdowns(){
-  const fill=(elId)=>{
-    const el=document.getElementById(elId);if(!el)return;
-    el.innerHTML=cache.products.length?cache.products.map(p=>`<option value="${p.id}">${p.name} — Stock: ${getStock(p.id)}</option>`).join(''):'<option>No products</option>';
-  };
+  const fill=(elId)=>{const el=document.getElementById(elId);if(!el)return;el.innerHTML=cache.products.length?cache.products.map(p=>`<option value="${p.id}">${p.name} — Stock: ${getStock(p.id)}</option>`).join(''):'<option>No products</option>';};
   fill('sale-sku');fill('restock-sku');fill('prod-batch-sku');
+  // Fragrance dropdowns
+  const frags=getFragrances();
+  ['new-sku-fragrance','edit-sku-fragrance'].forEach(id=>{
+    const el=document.getElementById(id);if(!el)return;
+    el.innerHTML='<option value="">— None —</option>'+frags.map(f=>`<option value="${f}">${f}</option>`).join('');
+  });
   const ss=document.getElementById('sale-sku');
   if(ss){ss.onchange=()=>{const p=cache.products.find(x=>x.id===ss.value);if(p){document.getElementById('sale-price').value=p.price;updateSaleTotal();}};ss.onchange();}
+  const ps=document.getElementById('prod-batch-sku');
+  if(ps){ps.onchange=updateProdCalc;updateProdCalc();}
 }
 
 function updateSaleTotal(){
@@ -540,25 +599,93 @@ function updateProdCalc(){
   const p=cache.products.find(x=>x.id===pid);
   const el=document.getElementById('prod-calc-info');
   if(!p){el.innerHTML='Select a product.';return;}
-  const f=FORMULA[p.type]||FORMULA['other'];
-  el.innerHTML=`<strong style="color:var(--accent)">${p.name} × ${qty}</strong><br>🫙 Oil: <strong>${f.oil*qty}ml</strong><br>🧴 Ethanol: <strong>${f.ethanol*qty}ml</strong><br>🍾 Bottles: <strong>${qty}</strong>`;
+  el.innerHTML=`<strong style="color:var(--accent)">${p.name} × ${qty}</strong><br>🫙 Oil: <strong>${(p.oil_ml||0)*qty}ml</strong> (${p.fragrance||'—'})<br>🧴 Ethanol: <strong>${(p.eth_ml||0)*qty}ml</strong><br>🍾 Bottles: <strong>${qty}</strong>`;
 }
 
-// ─── PRODUCTS ────────────────────────────────────────────────────────────────
-async function addProduct(){
-  const name=document.getElementById('prod-name').value.trim();
-  const sku_code=document.getElementById('prod-sku').value.trim();
-  const type=document.getElementById('prod-type').value;
-  const price=Number(document.getElementById('prod-price').value)||0;
-  const initial_stock=Number(document.getElementById('prod-stock').value)||0;
-  const threshold=Number(document.getElementById('prod-threshold').value)||5;
-  const fragrance=document.getElementById('prod-fragrance').value;
-  if(!name||!sku_code)return toast('Name and SKU required','error');
-  const{error}=await sb.from('products').insert({name,sku_code,type,fragrance,price,initial_stock,threshold});
-  if(error)return toast('Error: '+error.message,'error');
-  await addLog('📦',`Added product <strong>${name}</strong>`);
-  toast('Product added!');closeModal('modal-product');
+// ─── SKU MANAGEMENT ───────────────────────────────────────────────────────────
+async function addSKU(){
+  const name=document.getElementById('new-sku-name').value.trim();
+  const sku_code=document.getElementById('new-sku-code').value.trim();
+  const type=document.getElementById('new-sku-type').value;
+  const fragrance=document.getElementById('new-sku-fragrance').value;
+  const price=Number(document.getElementById('new-sku-price').value)||0;
+  const initial_stock=Number(document.getElementById('new-sku-stock').value)||0;
+  const oil_ml=Number(document.getElementById('new-sku-oil-ml').value)||0;
+  const eth_ml=Number(document.getElementById('new-sku-eth-ml').value)||0;
+  const box_cost=Number(document.getElementById('new-sku-box').value)||0;
+  const sticker_cost=Number(document.getElementById('new-sku-sticker').value)||0;
+  const bag_cost=Number(document.getElementById('new-sku-bag').value)||0;
+  const other_pkg_cost=Number(document.getElementById('new-sku-other-pkg').value)||0;
+  const threshold=Number(document.getElementById('new-sku-threshold').value)||5;
+  if(!name||!sku_code)return toast('Name and SKU code required','error');
+  const{error}=await sb.from('products').insert({name,sku_code,type,fragrance,price,initial_stock,threshold,oil_ml,eth_ml,box_cost,sticker_cost,bag_cost,other_pkg_cost});
+  if(error)return toast('SKU code already exists','error');
+  // Add fragrance to oil rates if new
+  if(fragrance&&!cache.settings.oilRates[fragrance]){
+    cache.settings.oilRates[fragrance]=0;
+    await sb.from('settings').update({oil_rates:cache.settings.oilRates}).eq('id',1);
+  }
+  await addLog('📦',`<strong>${currentUser}</strong> added SKU: ${name}`);
+  toast('SKU added!');closeModal('modal-add-sku');
   await loadAllData();renderPage(currentPage);
+}
+
+function openEditSKU(id){
+  const p=cache.products.find(x=>x.id===id);if(!p)return;
+  populateDropdowns();
+  document.getElementById('edit-sku-id').value=p.id;
+  document.getElementById('edit-sku-name').value=p.name;
+  document.getElementById('edit-sku-code').value=p.sku_code;
+  document.getElementById('edit-sku-type').value=p.type||'50ml';
+  document.getElementById('edit-sku-price').value=p.price||0;
+  document.getElementById('edit-sku-stock').value=p.initial_stock||0;
+  document.getElementById('edit-sku-oil-ml').value=p.oil_ml||0;
+  document.getElementById('edit-sku-eth-ml').value=p.eth_ml||0;
+  document.getElementById('edit-sku-box').value=p.box_cost||0;
+  document.getElementById('edit-sku-sticker').value=p.sticker_cost||0;
+  document.getElementById('edit-sku-bag').value=p.bag_cost||0;
+  document.getElementById('edit-sku-other-pkg').value=p.other_pkg_cost||0;
+  document.getElementById('edit-sku-threshold').value=p.threshold||5;
+  setTimeout(()=>{
+    const el=document.getElementById('edit-sku-fragrance');
+    if(el)el.value=p.fragrance||'';
+  },50);
+  document.getElementById('modal-edit-sku').classList.remove('hidden');
+}
+
+async function saveEditSKU(){
+  const id=document.getElementById('edit-sku-id').value;
+  const updates={
+    name:document.getElementById('edit-sku-name').value.trim(),
+    sku_code:document.getElementById('edit-sku-code').value.trim(),
+    type:document.getElementById('edit-sku-type').value,
+    fragrance:document.getElementById('edit-sku-fragrance').value,
+    price:Number(document.getElementById('edit-sku-price').value)||0,
+    initial_stock:Number(document.getElementById('edit-sku-stock').value)||0,
+    oil_ml:Number(document.getElementById('edit-sku-oil-ml').value)||0,
+    eth_ml:Number(document.getElementById('edit-sku-eth-ml').value)||0,
+    box_cost:Number(document.getElementById('edit-sku-box').value)||0,
+    sticker_cost:Number(document.getElementById('edit-sku-sticker').value)||0,
+    bag_cost:Number(document.getElementById('edit-sku-bag').value)||0,
+    other_pkg_cost:Number(document.getElementById('edit-sku-other-pkg').value)||0,
+    threshold:Number(document.getElementById('edit-sku-threshold').value)||5
+  };
+  await sb.from('products').update(updates).eq('id',id);
+  if(updates.fragrance&&!cache.settings.oilRates[updates.fragrance]){
+    cache.settings.oilRates[updates.fragrance]=0;
+    await sb.from('settings').update({oil_rates:cache.settings.oilRates}).eq('id',1);
+  }
+  await addLog('✏️',`<strong>${currentUser}</strong> edited SKU: ${updates.name}`);
+  toast('Saved!');closeModal('modal-edit-sku');
+  await loadAllData();renderPage(currentPage);
+}
+
+async function deleteSKU(id){
+  if(!confirm('Delete this SKU permanently?'))return;
+  const p=cache.products.find(x=>x.id===id);
+  await sb.from('products').delete().eq('id',id);
+  await addLog('🗑',`<strong>${currentUser}</strong> deleted SKU: ${p.name}`);
+  toast('Deleted');await loadAllData();renderPage(currentPage);
 }
 
 // ─── SALES ───────────────────────────────────────────────────────────────────
@@ -575,16 +702,13 @@ async function addSale(){
   const stock=getStock(product_id);
   if(qty>stock)return toast(`Only ${stock} in stock`,'error');
   const p=cache.products.find(x=>x.id===product_id);
-  const{error}=await sb.from('sales').insert({product_id,qty,price,total:qty*price,payment,notes,seller,customer,created_by:currentUser});
-  if(error)return toast('Error','error');
+  await sb.from('sales').insert({product_id,qty,price,total:qty*price,payment,notes,seller,customer,created_by:currentUser});
   await addLog('🧾',`<strong>${currentUser}</strong> sold ${qty}× ${p.name} — ${fmtPKR(qty*price)} · To: ${customer||'—'}`);
   toast('Sale recorded!');closeModal('modal-sale');
   await loadAllData();renderPage(currentPage);
 }
 
-let _salesFilter='all';
 function filterSales(f,btn){
-  _salesFilter=f;
   document.querySelectorAll('#page-sales .tab-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');renderSales(f);
 }
@@ -600,16 +724,7 @@ function renderSales(filter){
   tbody.innerHTML=sales.map(s=>{
     const p=cache.products.find(x=>x.id===s.product_id);
     const canDelete=isAdmin||s.created_by===currentUser;
-    return `<tr>
-      <td class="mono" style="font-size:11px">${fmtDate(s.created_at)}</td>
-      <td><div class="name">${p?p.name:'?'}</div><div style="font-size:11px;color:var(--text3)">${p?p.sku_code:''}</div></td>
-      <td>${s.qty}</td>
-      <td class="mono" style="color:var(--accent)">${fmtPKR(s.total)}</td>
-      <td>${s.seller||'—'}</td>
-      <td>${s.customer||'—'}</td>
-      <td><span class="badge badge-gold">${s.created_by||'—'}</span></td>
-      <td>${canDelete?`<button onclick="deleteSale('${s.id}')" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:16px">🗑</button>`:'—'}</td>
-    </tr>`;
+    return`<tr><td class="mono" style="font-size:11px">${fmtDate(s.created_at)}</td><td><div class="name">${p?p.name:'?'}</div><div style="font-size:11px;color:var(--text3)">${p?p.sku_code:''}</div></td><td>${s.qty}</td><td class="mono" style="color:var(--accent)">${fmtPKR(s.total)}</td><td>${s.seller||'—'}</td><td>${s.customer||'—'}</td><td><span class="badge badge-gold">${s.created_by||'—'}</span></td><td>${canDelete?`<button onclick="deleteSale('${s.id}')" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:16px">🗑</button>`:'—'}</td></tr>`;
   }).join('');
 }
 
@@ -644,15 +759,34 @@ async function addRawMaterial(){
   const threshold=Number(document.getElementById('rm-threshold').value)||50;
   if(!name||qty<=0)return toast('Name and qty required','error');
   const existing=cache.rawMaterials.find(m=>m.name.toLowerCase()===name.toLowerCase()&&m.type===type);
-  if(existing){
-    await sb.from('raw_materials').update({qty:existing.qty+qty,threshold}).eq('id',existing.id);
-    await addLog('🧪',`<strong>${currentUser}</strong> restocked ${name} +${qty} ${unit}`);
-  } else {
-    await sb.from('raw_materials').insert({type,name,qty,unit,threshold});
-    await addLog('🧪',`<strong>${currentUser}</strong> added raw material: ${name} ${qty} ${unit}`);
-  }
-  toast('Saved!');closeModal('modal-rawmat');
-  await loadAllData();renderPage(currentPage);
+  if(existing){await sb.from('raw_materials').update({qty:existing.qty+qty,threshold}).eq('id',existing.id);await addLog('🧪',`<strong>${currentUser}</strong> restocked ${name} +${qty} ${unit}`);}
+  else{await sb.from('raw_materials').insert({type,name,qty,unit,threshold});await addLog('🧪',`<strong>${currentUser}</strong> added: ${name} ${qty} ${unit}`);}
+  toast('Saved!');closeModal('modal-rawmat');await loadAllData();renderPage(currentPage);
+}
+
+async function deductRaw(id){
+  const m=cache.rawMaterials.find(x=>x.id===id);
+  const qty=Number(prompt(`Deduct how much ${m.unit} from "${m.name}"?\nCurrent stock: ${m.qty}`));
+  if(isNaN(qty)||qty<=0)return;
+  await sb.from('raw_materials').update({qty:Math.max(0,m.qty-qty)}).eq('id',id);
+  await addLog('➖',`<strong>${currentUser}</strong> used ${qty} ${m.unit} of ${m.name}`);
+  toast('Deducted!');await loadAllData();renderRawList();
+}
+
+async function editRawThreshold(id){
+  const m=cache.rawMaterials.find(x=>x.id===id);
+  const t=Number(prompt(`Set alert threshold for "${m.name}" (current: ${m.threshold} ${m.unit})`));
+  if(isNaN(t)||t<0)return;
+  await sb.from('raw_materials').update({threshold:t}).eq('id',id);
+  toast('Threshold updated');await loadAllData();renderRawList();
+}
+
+async function deleteRaw(id){
+  if(!confirm('Delete this raw material?'))return;
+  const m=cache.rawMaterials.find(x=>x.id===id);
+  await sb.from('raw_materials').delete().eq('id',id);
+  await addLog('🗑',`<strong>${currentUser}</strong> deleted raw material: ${m.name}`);
+  toast('Deleted');await loadAllData();renderRawList();
 }
 
 // ─── PRODUCTION ──────────────────────────────────────────────────────────────
@@ -662,115 +796,65 @@ async function logProduction(){
   const notes=document.getElementById('prod-batch-notes').value;
   if(!product_id||qty<1)return toast('Invalid','error');
   const p=cache.products.find(x=>x.id===product_id);
-  const f=FORMULA[p.type]||FORMULA['other'];
-  const oil_used=f.oil*qty,eth_used=f.ethanol*qty,bot_used=qty;
-
-  // Deduct raw materials
+  const oil_used=(p.oil_ml||0)*qty,eth_used=(p.eth_ml||0)*qty,bot_used=qty;
   async function deductRM(type,ml){
     if(ml<=0)return;
     const mats=cache.rawMaterials.filter(m=>m.type===type).sort((a,b)=>b.qty-a.qty);
-    let rem=ml;
-    for(const m of mats){const take=Math.min(m.qty,rem);await sb.from('raw_materials').update({qty:Math.max(0,m.qty-take)}).eq('id',m.id);rem-=take;if(!rem)break;}
+    let rem=ml;for(const m of mats){const take=Math.min(m.qty,rem);await sb.from('raw_materials').update({qty:Math.max(0,m.qty-take)}).eq('id',m.id);rem-=take;if(!rem)break;}
   }
-  await deductRM('oil',oil_used);
-  await deductRM('ethanol',eth_used);
-  await deductRM('bottle',bot_used);
+  await deductRM('oil',oil_used);await deductRM('ethanol',eth_used);await deductRM('bottle',bot_used);
   await sb.from('production').insert({product_id,qty,oil_used,eth_used,bot_used,notes,created_by:currentUser});
   await addLog('🏭',`<strong>${currentUser}</strong> produced ${qty}× ${p.name} — Oil:${oil_used}ml Eth:${eth_used}ml`);
-  toast('Batch logged!');closeModal('modal-production');
-  await loadAllData();renderPage(currentPage);
+  toast('Batch logged!');closeModal('modal-production');await loadAllData();renderPage(currentPage);
 }
 
-// ─── RENDER SKU LIST ─────────────────────────────────────────────────────────
+// ─── RENDER FUNCTIONS ─────────────────────────────────────────────────────────
 function renderSKUList(){
   const el=document.getElementById('sku-list');
   if(!cache.products.length){el.innerHTML=`<div class="empty"><div class="empty-icon">🧴</div><p>No products yet.</p></div>`;return;}
-  const groups={};
-  cache.products.forEach(p=>{const g=p.fragrance||'Other';if(!groups[g])groups[g]=[];groups[g].push(p);});
+  const groups={};cache.products.forEach(p=>{const g=p.fragrance||'Other';if(!groups[g])groups[g]=[];groups[g].push(p);});
   el.innerHTML=Object.entries(groups).map(([g,prods])=>`
-    <div style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;padding:8px 0 4px">${g}</div>
+    <div style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;padding:8px 0 4px;letter-spacing:0.08em">${g}</div>
     ${prods.map(p=>{
-      const stock=getStock(p.id);const low=stock<=p.threshold;
-      const pct=Math.min(100,(stock/Math.max(p.threshold*4,1))*100);
-      const cost=calcCost(p);
-      return `<div class="card" style="margin-bottom:10px;padding:14px">
-        <div class="flex-between">
-          <div><div style="font-weight:600">${p.name}</div><div style="font-size:11px;color:var(--text3)">${p.sku_code} · ${p.type}</div></div>
-          <span class="badge ${stock===0?'badge-red':low?'badge-orange':'badge-green'}">${stock===0?'OUT':low?'LOW':'OK'}</span>
-        </div>
+      const stock=getStock(p.id);const low=stock<=p.threshold;const pct=Math.min(100,(stock/Math.max(p.threshold*4,1))*100);
+      return`<div class="card" style="margin-bottom:10px;padding:14px">
+        <div class="flex-between"><div><div style="font-weight:600">${p.name}</div><div style="font-size:11px;color:var(--text3)">${p.sku_code} · ${p.type}</div></div>
+        <span class="badge ${stock===0?'badge-red':low?'badge-orange':'badge-green'}">${stock===0?'OUT':low?'LOW':'OK'}</span></div>
         <div class="flex-between" style="margin-top:10px;font-size:13px">
           <span>Stock: <strong>${stock}</strong></span>
           <span>Price: <strong style="color:var(--accent)">${p.price?fmtPKR(p.price):'—'}</strong></span>
-          <span>Cost: <strong>${cost?fmtPKR(cost):'—'}</strong></span>
+          <span>Cost: <strong style="color:var(--text2)">${fmtPKR(calcCost(p))}</strong></span>
         </div>
         <div class="progress-bar"><div class="progress-fill ${stock===0?'red':low?'':'green'}" style="width:${pct}%"></div></div>
-        ${isAdmin?`<div style="margin-top:10px"><button onclick="deleteProduct('${p.id}')" class="btn btn-danger btn-sm">Delete</button></div>`:''}
       </div>`;
     }).join('')}`).join('');
 }
 
-async function deleteProduct(id){
-  if(!confirm('Delete this product?'))return;
-  const p=cache.products.find(x=>x.id===id);
-  await sb.from('products').delete().eq('id',id);
-  await addLog('🗑',`<strong>${currentUser}</strong> deleted product ${p.name}`);
-  toast('Deleted');await loadAllData();renderPage(currentPage);
-}
-
-// ─── RENDER RAW ──────────────────────────────────────────────────────────────
 function renderRawList(){
   const el=document.getElementById('raw-list');
   if(!cache.rawMaterials.length){el.innerHTML=`<div class="empty"><div class="empty-icon">🧪</div><p>No raw materials.</p></div>`;return;}
   const icons={oil:'🫙',ethanol:'🧴',bottle:'🍾',other:'📦'};
   el.innerHTML=cache.rawMaterials.map(m=>{
-    const low=m.qty<=m.threshold;
-    const pct=Math.min(100,(m.qty/Math.max(m.threshold*4,1))*100);
-    return `<div class="card" style="margin-bottom:10px">
-      <div class="flex-between">
-        <div><div style="font-weight:600">${icons[m.type]||'📦'} ${m.name}</div><div style="font-size:12px;color:var(--text3)">${m.type}</div></div>
-        ${low?`<span class="badge badge-red">⚠️ LOW</span>`:`<span class="badge badge-green">OK</span>`}
-      </div>
+    const low=m.qty<=m.threshold;const pct=Math.min(100,(m.qty/Math.max(m.threshold*4,1))*100);
+    return`<div class="card" style="margin-bottom:10px">
+      <div class="flex-between"><div><div style="font-weight:600">${icons[m.type]||'📦'} ${m.name}</div><div style="font-size:12px;color:var(--text3)">${m.type}</div></div>
+      ${low?`<span class="badge badge-red">⚠️ LOW</span>`:`<span class="badge badge-green">OK</span>`}</div>
       <div style="font-size:22px;font-weight:700;font-family:'DM Mono',monospace;color:${low?'var(--red)':'var(--text)'};margin-top:8px">${m.qty} <span style="font-size:14px;color:var(--text3)">${m.unit}</span></div>
       <div class="progress-bar"><div class="progress-fill ${low?'red':''}" style="width:${pct}%"></div></div>
       <div style="font-size:12px;color:var(--text3);margin-top:4px">Alert below ${m.threshold} ${m.unit}</div>
-      <div style="display:flex;gap:8px;margin-top:10px">
+      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
         <button onclick="deductRaw('${m.id}')" class="btn btn-ghost btn-sm">− Deduct</button>
-        ${isAdmin?`<button onclick="deleteRaw('${m.id}')" class="btn btn-danger btn-sm">Delete</button>`:''}
+        ${isAdmin?`<button onclick="editRawThreshold('${m.id}')" class="btn btn-ghost btn-sm">Edit Threshold</button><button onclick="deleteRaw('${m.id}')" class="btn btn-danger btn-sm">Delete</button>`:''}
       </div>
     </div>`;
   }).join('');
-}
-
-async function deductRaw(id){
-  const m=cache.rawMaterials.find(x=>x.id===id);
-  const qty=Number(prompt(`Deduct how much ${m.unit} from "${m.name}"? (Current: ${m.qty})`));
-  if(isNaN(qty)||qty<=0)return;
-  await sb.from('raw_materials').update({qty:Math.max(0,m.qty-qty)}).eq('id',id);
-  await addLog('➖',`<strong>${currentUser}</strong> used ${qty} ${m.unit} of ${m.name}`);
-  toast('Deducted!');await loadAllData();renderRawList();
-}
-
-async function deleteRaw(id){
-  if(!confirm('Delete?'))return;
-  const m=cache.rawMaterials.find(x=>x.id===id);
-  await sb.from('raw_materials').delete().eq('id',id);
-  await addLog('🗑',`<strong>${currentUser}</strong> deleted raw material ${m.name}`);
-  toast('Deleted');await loadAllData();renderRawList();
 }
 
 function renderProductionList(){
   const el=document.getElementById('production-list');
   if(!cache.production.length){el.innerHTML=`<div class="empty"><div class="empty-icon">🏭</div><p>No production batches.</p></div>`;return;}
   const sorted=[...cache.production].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
-  el.innerHTML=`<div class="card"><div class="table-wrap"><table>
-    <thead><tr><th>Date</th><th>Product</th><th>Units</th><th>Oil</th><th>Eth</th><th>By</th></tr></thead>
-    <tbody>${sorted.map(b=>{const p=cache.products.find(x=>x.id===b.product_id);return`<tr>
-      <td class="mono" style="font-size:11px">${fmtDate(b.created_at)}</td>
-      <td class="name">${p?p.name:'?'}</td><td>${b.qty}</td>
-      <td>${b.oil_used?b.oil_used+'ml':'—'}</td><td>${b.eth_used?b.eth_used+'ml':'—'}</td>
-      <td><span class="badge badge-gold">${b.created_by||'—'}</span></td>
-    </tr>`;}).join('')}</tbody>
-  </table></div></div>`;
+  el.innerHTML=`<div class="card"><div class="table-wrap"><table><thead><tr><th>Date</th><th>Product</th><th>Units</th><th>Oil Used</th><th>Ethanol</th><th>By</th></tr></thead><tbody>${sorted.map(b=>{const p=cache.products.find(x=>x.id===b.product_id);return`<tr><td class="mono" style="font-size:11px">${fmtDate(b.created_at)}</td><td class="name">${p?p.name:'?'}</td><td>${b.qty}</td><td>${b.oil_used?b.oil_used+'ml':'—'}</td><td>${b.eth_used?b.eth_used+'ml':'—'}</td><td><span class="badge badge-gold">${b.created_by||'—'}</span></td></tr>`;}).join('')}</tbody></table></div></div>`;
 }
 
 function switchInvTab(tab,btn){
@@ -779,6 +863,52 @@ function switchInvTab(tab,btn){
   document.getElementById('inv-finished').classList.toggle('hidden',tab!=='finished');
   document.getElementById('inv-raw').classList.toggle('hidden',tab!=='raw');
   document.getElementById('inv-production').classList.toggle('hidden',tab!=='production');
+}
+
+// ─── COST CALCULATOR ─────────────────────────────────────────────────────────
+function renderCosts(){
+  const el=document.getElementById('cost-breakdown');
+  if(!cache.products.length){el.innerHTML=`<div class="empty"><div class="empty-icon">💰</div><p>No products yet.</p></div>`;return;}
+  const groups={};cache.products.forEach(p=>{const g=p.fragrance||'Other';if(!groups[g])groups[g]=[];groups[g].push(p);});
+  el.innerHTML=Object.entries(groups).map(([g,prods])=>`
+    <div style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;padding:8px 0 4px;letter-spacing:0.08em">${g}</div>
+    ${prods.map(p=>{
+      const oilRate=p.fragrance?(cache.settings.oilRates[p.fragrance]||0):0;
+      const oilCost=(p.oil_ml||0)*oilRate;
+      const ethCost=(p.eth_ml||0)*(cache.settings.ethanolRate||0);
+      const boxCost=p.box_cost||0;
+      const stickerCost=p.sticker_cost||0;
+      const bagCost=p.bag_cost||0;
+      const otherCost=p.other_pkg_cost||0;
+      const totalCost=oilCost+ethCost+boxCost+stickerCost+bagCost+otherCost;
+      const profit=p.price?p.price-totalCost:null;
+      const margin=p.price&&totalCost?(((p.price-totalCost)/p.price)*100).toFixed(1):null;
+      return`<div class="card" style="margin-bottom:10px">
+        <div style="font-weight:700;font-size:15px;margin-bottom:10px">${p.name} <span style="font-size:11px;color:var(--text3);font-weight:400">${p.sku_code}</span></div>
+        <div class="cost-row"><span style="color:var(--text2)">🫙 ${p.fragrance||''} Oil (${p.oil_ml||0}ml × PKR ${oilRate}/ml)</span><span class="mono">${fmtPKR(oilCost)}</span></div>
+        <div class="cost-row"><span style="color:var(--text2)">🧴 Ethanol (${p.eth_ml||0}ml × PKR ${cache.settings.ethanolRate||0}/ml)</span><span class="mono">${fmtPKR(ethCost)}</span></div>
+        ${boxCost?`<div class="cost-row"><span style="color:var(--text2)">📦 Box</span><span class="mono">${fmtPKR(boxCost)}</span></div>`:''}
+        ${stickerCost?`<div class="cost-row"><span style="color:var(--text2)">🏷️ Sticker</span><span class="mono">${fmtPKR(stickerCost)}</span></div>`:''}
+        ${bagCost?`<div class="cost-row"><span style="color:var(--text2)">🛍️ Bag</span><span class="mono">${fmtPKR(bagCost)}</span></div>`:''}
+        ${otherCost?`<div class="cost-row"><span style="color:var(--text2)">➕ Other Packaging</span><span class="mono">${fmtPKR(otherCost)}</span></div>`:''}
+        <div class="cost-total"><span>Total Cost to Make</span><span style="color:var(--red)">${fmtPKR(totalCost)}</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px">
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px;text-align:center">
+            <div style="font-size:11px;color:var(--text3)">Selling Price</div>
+            <div style="font-weight:700;color:var(--accent);font-family:'DM Mono',monospace;font-size:13px">${p.price?fmtPKR(p.price):'—'}</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px;text-align:center">
+            <div style="font-size:11px;color:var(--text3)">Profit/Unit</div>
+            <div style="font-weight:700;color:var(--green);font-family:'DM Mono',monospace;font-size:13px">${profit!==null?fmtPKR(profit):'—'}</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px;text-align:center">
+            <div style="font-size:11px;color:var(--text3)">Margin</div>
+            <div style="font-weight:700;color:var(--accent);font-family:'DM Mono',monospace;font-size:13px">${margin!==null?margin+'%':'—'}</div>
+          </div>
+        </div>
+        ${isAdmin?`<div style="margin-top:10px"><button onclick="openEditSKU('${p.id}')" class="btn btn-ghost btn-sm">✏️ Edit Costs</button></div>`:''}
+      </div>`;
+    }).join('')}`).join('');
 }
 
 // ─── DASHBOARD ───────────────────────────────────────────────────────────────
@@ -793,12 +923,11 @@ function renderDashboard(){
   document.getElementById('stat-month-u').textContent=units(monthSales)+' units';
   document.getElementById('stat-total-rev').textContent=fmtPKR(sum(cache.sales));
   document.getElementById('stat-total-s').textContent=cache.sales.length+' sales';
-  let totalCOGS=0;
-  cache.sales.forEach(s=>{const p=cache.products.find(x=>x.id===s.product_id);if(p){const c=calcCost(p);totalCOGS+=c*s.qty;}});
+  let totalCOGS=0;cache.sales.forEach(s=>{const p=cache.products.find(x=>x.id===s.product_id);if(p)totalCOGS+=calcCost(p)*s.qty;});
   const totalRev=sum(cache.sales);const profit=totalRev-totalCOGS;const margin=totalRev?Math.round((profit/totalRev)*100):0;
   const hasRates=cache.settings.ethanolRate>0||Object.values(cache.settings.oilRates).some(r=>r>0);
-  document.getElementById('stat-profit').textContent=hasRates?fmtPKR(profit):'Set rates';
-  document.getElementById('stat-margin').textContent=hasRates?margin+'% margin':'in Admin';
+  document.getElementById('stat-profit').textContent=hasRates?fmtPKR(profit):'Set rates in Admin';
+  document.getElementById('stat-margin').textContent=hasRates?margin+'% margin':'';
   renderAlerts();renderRevenueChart();renderBestSellers();renderStockOverview();
   const logEl=document.getElementById('recent-log');
   const logs=cache.logs.slice(0,8);
@@ -808,7 +937,7 @@ function renderDashboard(){
 function renderAlerts(){
   const alerts=[];
   cache.products.forEach(p=>{const s=getStock(p.id);if(s===0)alerts.push(`<div class="alert alert-red">🚨 <strong>${p.name}</strong> OUT OF STOCK</div>`);else if(s<=p.threshold)alerts.push(`<div class="alert alert-orange">⚠️ <strong>${p.name}</strong> low — ${s} left</div>`);});
-  cache.rawMaterials.forEach(m=>{if(m.qty<=m.threshold)alerts.push(`<div class="alert alert-orange">⚠️ <strong>${m.name}</strong> low — ${m.qty} ${m.unit}</div>`);});
+  cache.rawMaterials.forEach(m=>{if(m.qty<=m.threshold)alerts.push(`<div class="alert alert-orange">⚠️ Raw material <strong>${m.name}</strong> low — ${m.qty} ${m.unit}</div>`);});
   document.getElementById('alerts-container').innerHTML=alerts.join('');
 }
 
@@ -818,14 +947,14 @@ function renderRevenueChart(){
   for(let i=5;i>=0;i--){const d=new Date(n.getFullYear(),n.getMonth()-i,1);months.push({label:d.toLocaleString('en',{month:'short'}),month:d.getMonth(),year:d.getFullYear()});}
   const vals=months.map(m=>cache.sales.filter(s=>{const d=new Date(s.created_at);return d.getMonth()===m.month&&d.getFullYear()===m.year;}).reduce((a,s)=>a+s.total,0));
   const max=Math.max(...vals,1);
-  el.innerHTML=months.map((m,i)=>`<div class="chart-bar-wrap"><div class="chart-val">${vals[i]?Math.round(vals[i]/1000)+'k':''}</div><div class="chart-bar ${vals[i]>0?'fill':''}" style="height:${(vals[i]/max)*130}px"></div><div class="chart-label">${m.label}</div></div>`).join('');
+  el.innerHTML=months.map((m,i)=>`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end"><div style="font-size:9px;color:var(--accent);font-family:'DM Mono',monospace">${vals[i]?Math.round(vals[i]/1000)+'k':''}</div><div style="width:100%;background:${vals[i]>0?'var(--accent)':'var(--accent-dim)'};border-radius:4px 4px 0 0;height:${(vals[i]/max)*130}px;min-height:4px"></div><div style="font-size:10px;color:var(--text3)">${m.label}</div></div>`).join('');
 }
 
 function renderBestSellers(){
   const el=document.getElementById('best-sellers-list');
   if(!cache.products.length){el.innerHTML=`<div class="empty"><p>No products.</p></div>`;return;}
   const ranked=cache.products.map(p=>{const sold=cache.sales.filter(s=>s.product_id===p.id).reduce((a,s)=>a+s.qty,0);const rev=cache.sales.filter(s=>s.product_id===p.id).reduce((a,s)=>a+s.total,0);return{...p,sold,rev};}).sort((a,b)=>b.sold-a.sold).slice(0,5);
-  el.innerHTML=ranked.map((p,i)=>`<div class="rank-item"><div style="font-size:13px;font-weight:700;color:var(--text3);width:20px">${i+1}</div><div style="flex:1"><div style="font-weight:500">${p.name}</div><div style="font-size:11px;color:var(--text3)">${p.sku_code}</div></div><div style="text-align:right"><div class="mono" style="color:var(--accent)">${p.sold} units</div><div style="font-size:11px;color:var(--text3)">${fmtPKR(p.rev)}</div></div></div>`).join('');
+  el.innerHTML=ranked.map((p,i)=>`<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="font-size:13px;font-weight:700;color:var(--text3);width:20px">${i+1}</div><div style="flex:1"><div style="font-weight:500">${p.name}</div><div style="font-size:11px;color:var(--text3)">${p.sku_code}</div></div><div style="text-align:right"><div class="mono" style="color:var(--accent)">${p.sold} units</div><div style="font-size:11px;color:var(--text3)">${fmtPKR(p.rev)}</div></div></div>`).join('');
 }
 
 function renderStockOverview(){
@@ -835,15 +964,60 @@ function renderStockOverview(){
 }
 
 // ─── ANALYTICS ───────────────────────────────────────────────────────────────
+function changeYear(dir){
+  analyticsYear+=dir;
+  const now=new Date().getFullYear();
+  if(analyticsYear>now)analyticsYear=now;
+  renderAnalytics();
+}
+
 function renderAnalytics(){
-  const nowD=new Date();const months=[];
-  for(let i=11;i>=0;i--){const d=new Date(nowD.getFullYear(),nowD.getMonth()-i,1);const sales=cache.sales.filter(s=>{const sd=new Date(s.created_at);return sd.getMonth()===d.getMonth()&&sd.getFullYear()===d.getFullYear();});months.push({label:d.toLocaleString('en',{month:'short',year:'2-digit'}),rev:sales.reduce((a,s)=>a+s.total,0),units:sales.reduce((a,s)=>a+s.qty,0)});}
-  document.getElementById('analytics-monthly').innerHTML=`<div class="table-wrap"><table><thead><tr><th>Month</th><th>Revenue</th><th>Units</th></tr></thead><tbody>${months.filter(m=>m.rev>0).map(m=>`<tr><td>${m.label}</td><td class="mono" style="color:var(--accent)">${fmtPKR(m.rev)}</td><td>${m.units}</td></tr>`).join('')||'<tr><td colspan="3" style="text-align:center;color:var(--text3)">No sales yet</td></tr>'}</tbody></table></div>`;
-  const skuPerf=cache.products.map(p=>{const sales=cache.sales.filter(s=>s.product_id===p.id);const rev=sales.reduce((a,s)=>a+s.total,0);const unitsSold=sales.reduce((a,s)=>a+s.qty,0);const cost=calcCost(p);const profit=cost?rev-(cost*unitsSold):null;return{name:p.name,sku_code:p.sku_code,rev,unitsSold,profit};}).sort((a,b)=>b.rev-a.rev);
+  document.getElementById('analytics-year').textContent=analyticsYear;
+  const months=[];
+  for(let i=0;i<12;i++){
+    const sales=cache.sales.filter(s=>{const d=new Date(s.created_at);return d.getMonth()===i&&d.getFullYear()===analyticsYear;});
+    const label=new Date(analyticsYear,i,1).toLocaleString('en',{month:'short'});
+    months.push({label,rev:sales.reduce((a,s)=>a+s.total,0),units:sales.reduce((a,s)=>a+s.qty,0),sales});
+  }
+
+  // Monthly table with SKU breakdown
+  document.getElementById('analytics-monthly').innerHTML=`
+    <div class="table-wrap"><table>
+      <thead><tr><th>Month</th><th>Revenue</th><th>Units</th><th>Top SKU</th></tr></thead>
+      <tbody>${months.map(m=>{
+        const topSKU=m.sales.length?cache.products.find(p=>p.id===m.sales.sort((a,b)=>b.qty-a.qty)[0]?.product_id):null;
+        return`<tr>
+          <td style="font-weight:500">${m.label}</td>
+          <td class="mono" style="color:${m.rev>0?'var(--accent)':'var(--text3)'}">${m.rev>0?fmtPKR(m.rev):'—'}</td>
+          <td>${m.units||'—'}</td>
+          <td style="font-size:12px;color:var(--text2)">${topSKU?topSKU.name:'—'}</td>
+        </tr>`;
+      }).join('')}
+      <tr style="border-top:2px solid var(--border)">
+        <td style="font-weight:700">Total ${analyticsYear}</td>
+        <td class="mono" style="color:var(--accent);font-weight:700">${fmtPKR(months.reduce((a,m)=>a+m.rev,0))}</td>
+        <td style="font-weight:700">${months.reduce((a,m)=>a+m.units,0)}</td>
+        <td>—</td>
+      </tr>
+      </tbody>
+    </table></div>`;
+
+  // SKU Performance all time
+  const skuPerf=cache.products.map(p=>{
+    const sales=cache.sales.filter(s=>s.product_id===p.id);
+    const rev=sales.reduce((a,s)=>a+s.total,0);
+    const unitsSold=sales.reduce((a,s)=>a+s.qty,0);
+    const cost=calcCost(p);
+    const profit=cost?rev-(cost*unitsSold):null;
+    return{name:p.name,sku_code:p.sku_code,rev,unitsSold,profit};
+  }).sort((a,b)=>b.rev-a.rev);
   document.getElementById('analytics-sku').innerHTML=`<div class="table-wrap"><table><thead><tr><th>Product</th><th>Units</th><th>Revenue</th><th>Profit</th></tr></thead><tbody>${skuPerf.map(p=>`<tr><td><div class="name">${p.name}</div><div style="font-size:11px;color:var(--text3)">${p.sku_code}</div></td><td>${p.unitsSold}</td><td class="mono" style="color:var(--accent)">${fmtPKR(p.rev)}</td><td class="mono" style="color:var(--green)">${p.profit!==null?fmtPKR(p.profit):'—'}</td></tr>`).join('')||'<tr><td colspan="4" style="text-align:center;color:var(--text3)">No data</td></tr>'}</tbody></table></div>`;
-  const totalRev=cache.sales.reduce((a,s)=>a+s.total,0);let totalCOGS=0;cache.sales.forEach(s=>{const p=cache.products.find(x=>x.id===s.product_id);if(p){totalCOGS+=calcCost(p)*s.qty;}});
+
+  // Profit summary
+  const totalRev=cache.sales.reduce((a,s)=>a+s.total,0);
+  let totalCOGS=0;cache.sales.forEach(s=>{const p=cache.products.find(x=>x.id===s.product_id);if(p)totalCOGS+=calcCost(p)*s.qty;});
   const profit=totalRev-totalCOGS;const margin=totalRev?((profit/totalRev)*100).toFixed(1):0;
-  document.getElementById('analytics-profit').innerHTML=`<div class="stat-grid"><div class="stat-card"><div class="stat-label">Total Revenue</div><div class="stat-value gold">${fmtPKR(totalRev)}</div></div><div class="stat-card"><div class="stat-label">Total COGS</div><div class="stat-value">${totalCOGS?fmtPKR(totalCOGS):'—'}</div></div><div class="stat-card"><div class="stat-label">Gross Profit</div><div class="stat-value green">${totalCOGS?fmtPKR(profit):'—'}</div></div><div class="stat-card"><div class="stat-label">Margin</div><div class="stat-value gold">${totalCOGS?margin+'%':'—'}</div></div></div>`;
+  document.getElementById('analytics-profit').innerHTML=`<div class="stat-grid"><div class="stat-card"><div class="stat-label">Total Revenue</div><div class="stat-value gold">${fmtPKR(totalRev)}</div></div><div class="stat-card"><div class="stat-label">Total Cost</div><div class="stat-value">${totalCOGS?fmtPKR(totalCOGS):'—'}</div></div><div class="stat-card"><div class="stat-label">Gross Profit</div><div class="stat-value green">${totalCOGS?fmtPKR(profit):'—'}</div></div><div class="stat-card"><div class="stat-label">Margin</div><div class="stat-value gold">${totalCOGS?margin+'%':'—'}</div></div></div>`;
 }
 
 // ─── LOG ─────────────────────────────────────────────────────────────────────
@@ -857,24 +1031,31 @@ function renderFullLog(){
 async function renderAdmin(){
   // Users
   const{data:users}=await sb.from('users').select('*').order('created_at');
-  const el=document.getElementById('users-list');
-  el.innerHTML=users?users.map(u=>`<div class="flex-between" style="padding:10px 0;border-bottom:1px solid var(--border)">
-    <div><div style="font-weight:600">${u.username}</div><div style="font-size:12px;color:var(--text3)">${u.role} · joined ${fmtDate(u.created_at)}</div></div>
-    <div style="display:flex;gap:8px;align-items:center">
-      <span class="badge ${u.role==='admin'?'badge-gold':'badge-green'}">${u.role}</span>
-      ${u.username!==currentUser?`<button onclick="deleteUser('${u.id}','${u.username}')" class="btn btn-danger btn-sm">Remove</button>`:'<span style="font-size:12px;color:var(--text3)">You</span>'}
-    </div>
-  </div>`).join(''):'';
+  document.getElementById('users-list').innerHTML=users?users.map(u=>`<div class="flex-between" style="padding:10px 0;border-bottom:1px solid var(--border)"><div><div style="font-weight:600">${u.username}</div><div style="font-size:12px;color:var(--text3)">${u.role} · joined ${fmtDate(u.created_at)}</div></div><div style="display:flex;gap:8px;align-items:center"><span class="badge ${u.role==='admin'?'badge-gold':'badge-green'}">${u.role}</span>${u.username!==currentUser?`<button onclick="deleteUser('${u.id}','${u.username}')" class="btn btn-danger btn-sm">Remove</button>`:'<span style="font-size:12px;color:var(--text3)">You</span>'}</div></div>`).join(''):'';
 
-  // Rates
+  // SKU Manager table
+  document.getElementById('admin-sku-list').innerHTML=cache.products.length?`<div class="table-wrap"><table><thead><tr><th>Name</th><th>SKU</th><th>Type</th><th>Price</th><th>Cost</th><th></th></tr></thead><tbody>${cache.products.map(p=>`<tr><td class="name">${p.name}</td><td class="mono" style="font-size:11px">${p.sku_code}</td><td>${p.type}</td><td class="mono" style="color:var(--accent)">${p.price?fmtPKR(p.price):'—'}</td><td class="mono" style="color:var(--text2)">${fmtPKR(calcCost(p))}</td><td style="display:flex;gap:6px"><button onclick="openEditSKU('${p.id}')" class="btn btn-ghost btn-sm">Edit</button><button onclick="deleteSKU('${p.id}')" class="btn btn-danger btn-sm">Del</button></td></tr>`).join('')}</tbody></table></div>`:`<div class="empty" style="padding:20px"><p>No SKUs yet.</p></div>`;
+
+  // Oil rates — one per fragrance found in products or settings
+  const allFragrances=[...new Set([...Object.keys(cache.settings.oilRates),...cache.products.map(p=>p.fragrance).filter(Boolean)])];
+  document.getElementById('oil-rates-container').innerHTML=allFragrances.map(f=>`<div class="settings-row"><div><div class="settings-label">${f} Oil</div><div class="settings-sub">PKR per ml</div></div><input class="settings-input" type="number" id="rate-oil-${f.replace(/\s/g,'-')}" value="${cache.settings.oilRates[f]||''}" step="0.01"/></div>`).join('');
+
+  // Ethanol rate
   document.getElementById('rate-ethanol').value=cache.settings.ethanolRate||'';
-  document.getElementById('oil-rates-container').innerHTML=FRAGRANCES.map(f=>`<div class="settings-row"><div><div class="settings-label">${f} Oil</div><div class="settings-sub">PKR per ml</div></div><input class="settings-input" type="number" id="rate-oil-${f.replace(/\s/g,'-')}" value="${cache.settings.oilRates[f]||''}" step="0.01"/></div>`).join('');
+
+  // Admin raw list
+  const rawEl=document.getElementById('admin-raw-list');
+  if(!cache.rawMaterials.length){rawEl.innerHTML=`<div class="empty" style="padding:20px"><p>No raw materials yet.</p></div>`;}
+  else{
+    const icons={oil:'🫙',ethanol:'🧴',bottle:'🍾',other:'📦'};
+    rawEl.innerHTML=`<div class="table-wrap"><table><thead><tr><th>Material</th><th>Stock</th><th>Unit</th><th>Alert At</th><th></th></tr></thead><tbody>${cache.rawMaterials.map(m=>`<tr><td><div class="name">${icons[m.type]||'📦'} ${m.name}</div><div style="font-size:11px;color:var(--text3)">${m.type}</div></td><td class="mono" style="color:${m.qty<=m.threshold?'var(--red)':'var(--text)'}">${m.qty}</td><td>${m.unit}</td><td>${m.threshold}</td><td style="display:flex;gap:6px"><button onclick="deductRaw('${m.id}')" class="btn btn-ghost btn-sm">−</button><button onclick="editRawThreshold('${m.id}')" class="btn btn-ghost btn-sm">⚙️</button><button onclick="deleteRaw('${m.id}')" class="btn btn-danger btn-sm">Del</button></td></tr>`).join('')}</tbody></table></div>`;
+  }
 
   // SKU prices
   document.getElementById('sku-price-settings').innerHTML=cache.products.map(p=>`<div class="settings-row"><div><div class="settings-label">${p.name}</div><div class="settings-sub">${p.sku_code}</div></div><input class="settings-input" type="number" id="price-${p.id}" value="${p.price||''}"/></div>`).join('');
 
   // Thresholds
-  document.getElementById('sku-threshold-settings').innerHTML=cache.products.map(p=>`<div class="settings-row"><div><div class="settings-label">${p.name}</div><div class="settings-sub">Alert at ≤ this</div></div><input class="settings-input" type="number" id="thresh-${p.id}" value="${p.threshold||5}"/></div>`).join('');
+  document.getElementById('sku-threshold-settings').innerHTML=cache.products.map(p=>`<div class="settings-row"><div><div class="settings-label">${p.name}</div><div class="settings-sub">Alert at ≤</div></div><input class="settings-input" type="number" id="thresh-${p.id}" value="${p.threshold||5}"/></div>`).join('');
 }
 
 async function addUser(){
@@ -892,36 +1073,44 @@ async function deleteUser(id,username){
   if(!confirm(`Remove user "${username}"?`))return;
   await sb.from('users').delete().eq('id',id);
   await addLog('🗑',`<strong>${currentUser}</strong> removed user: ${username}`);
-  toast('User removed');renderAdmin();
+  toast('Removed');renderAdmin();
 }
 
-async function saveRates(){
-  const ethanolRate=Number(document.getElementById('rate-ethanol').value)||0;
+async function saveOilRates(){
+  const allFragrances=[...new Set([...Object.keys(cache.settings.oilRates),...cache.products.map(p=>p.fragrance).filter(Boolean)])];
   const oilRates={};
-  FRAGRANCES.forEach(f=>{const el=document.getElementById('rate-oil-'+f.replace(/\s/g,'-'));if(el)oilRates[f]=Number(el.value)||0;});
-  await sb.from('settings').update({ethanol_rate:ethanolRate,oil_rates:oilRates}).eq('id',1);
-  await addLog('⚙️',`<strong>${currentUser}</strong> updated raw material rates`);
-  cache.settings.ethanolRate=ethanolRate;cache.settings.oilRates=oilRates;
-  toast('Rates saved!');
+  allFragrances.forEach(f=>{
+    const el=document.getElementById('rate-oil-'+f.replace(/\s/g,'-'));
+    if(el)oilRates[f]=Number(el.value)||0;
+  });
+  await sb.from('settings').update({oil_rates:oilRates}).eq('id',1);
+  await addLog('⚙️',`<strong>${currentUser}</strong> updated oil rates`);
+  cache.settings.oilRates=oilRates;
+  toast('Oil rates saved!');
+}
+
+async function saveEthanolRate(){
+  const rate=Number(document.getElementById('rate-ethanol').value)||0;
+  await sb.from('settings').update({ethanol_rate:rate}).eq('id',1);
+  await addLog('⚙️',`<strong>${currentUser}</strong> updated ethanol rate to PKR ${rate}/ml`);
+  cache.settings.ethanolRate=rate;
+  toast('Ethanol rate saved!');
 }
 
 async function saveSKUPrices(){
-  for(const p of cache.products){
-    const el=document.getElementById('price-'+p.id);
-    if(el)await sb.from('products').update({price:Number(el.value)||0}).eq('id',p.id);
-  }
+  for(const p of cache.products){const el=document.getElementById('price-'+p.id);if(el)await sb.from('products').update({price:Number(el.value)||0}).eq('id',p.id);}
   await addLog('⚙️',`<strong>${currentUser}</strong> updated SKU prices`);
   await loadAllData();toast('Prices saved!');
 }
 
 async function saveThresholds(){
-  for(const p of cache.products){
-    const el=document.getElementById('thresh-'+p.id);
-    if(el)await sb.from('products').update({threshold:Number(el.value)||5}).eq('id',p.id);
-  }
-  await addLog('⚙️',`<strong>${currentUser}</strong> updated stock thresholds`);
+  for(const p of cache.products){const el=document.getElementById('thresh-'+p.id);if(el)await sb.from('products').update({threshold:Number(el.value)||5}).eq('id',p.id);}
+  await addLog('⚙️',`<strong>${currentUser}</strong> updated thresholds`);
   await loadAllData();toast('Thresholds saved!');
 }
+
+// ─── EDIT SKU MODAL ──────────────────────────────────────────────────────────
+// (modal-edit-sku is defined in HTML above)
 </script>
 </body>
 </html>
